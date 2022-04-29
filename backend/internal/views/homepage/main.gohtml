@@ -1,0 +1,203 @@
+{{ define "content" }}
+
+    <!-- Homepage Hero section -->
+    <section class="home__hero">
+        <div class="hero">
+            <h1 class="hero__title">
+                {{ .Homepage.Content.HeroTitle }}
+            </h1>
+            <p class="hero__subtitle">
+                {{ .Homepage.Content.HeroSubtitle }}
+            </p>
+
+            <button class="hero__arrow_down"><span></span></button>
+        </div>
+    </section>
+    <!-- END Homepage Hero section -->
+
+    <div class="home__screen">
+        <!-- Homepage About section -->
+        <section class="home__about">
+            <div class="text_wrapper about">
+                <h2 class="about__title home__title">{{ .Homepage.Content.AboutTitle }}</h2>
+
+                <div class="about__content">
+                    {{/* Loop through Homepage.Content.AboutText */}}
+                    {{ range $index, $element := .Homepage.Content.AboutText }}
+                        <p class="about__text">{{ $element }}</p>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+        <!-- END Homepage About section -->
+
+        <!-- Homepage Shopping Services section -->
+        <section class="home__shopping_services">
+            <div class="text_wrapper shopping_services">
+                <h2 class="home__title shopping_services__title">{{ .Homepage.Content.ShoppingTitle }}</h2>
+
+                <div class="shopping_services__content">
+                    {{/* Loop ShoppingCards */}}
+                    {{ range $index, $element := .ShoppingCards }}
+                        <article class="shopping_services__card shopping_service">
+                            <h3 class="shopping_service__title">{{ $element.Title }}</h3>
+                            <p class="shopping_service__content">{{ $element.Content }}</p>
+                        </article>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+        <!-- END Homepage Shopping Services section -->
+    </div>
+
+    <!-- Homepage Working with section -->
+    <section class="home__section home__section--full home__working_with">
+        <div class="text_wrapper working_with">
+            <div class="working_with__header">
+                {{/* Conditional rendering based on homepage lang*/}}
+                {{ if eq .Homepage.Lang "ru" }}
+                    <h2 class="working_with__title">Хотите заказать из интернет-магазинов в Россию?</h2>
+
+                    <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="working_with__button">
+                        Переходите в whats app
+                    </a>
+
+                {{ else }}
+                    <h2 class="working_with__title">Want to make an order from online shops to Russia?</h2>
+
+                    <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="working_with__button">
+                        Go to whats app
+                    </a>
+                {{ end }}
+            </div>
+
+            <div class="working_with__subtitle">
+                <img src="/static/images/working_with_image.png" alt="Мы доставляем с">
+            </div>
+
+            <ul class="working_with__list">
+                <li class="working_with__item">farfetch</li>
+                <li class="working_with__item">net-a-porter</li>
+                <li class="working_with__item">MATCHESFASHION</li>
+                <li class="working_with__item">mytheresa</li>
+                <li class="working_with__item">brownfashion</li>
+
+                {{/* Conditional rendering based on homepage lang*/}}
+                {{ if eq .Homepage.Lang "ru" }}
+                    <li class="working_with__item">и другие</li>
+                {{ else }}
+                    <li class="working_with__item">and others</li>
+                {{ end }}
+            </ul>
+        </div>
+    </section>
+    <!-- END Homepage Working with section -->
+
+    <!-- Homepage How it works section -->
+    <section class="home__section home__section--full home__how_works">
+        <div class="text_wrapper how_works">
+            <h2 class="home__title how_works__title">
+                {{ .Homepage.Content.HowWorksTitle }}
+            </h2>
+
+            <ol class="how_works__list">
+                {{/* Loop through HowWorksCards */}}
+                {{ range $index, $element := .HowWorksCards }}
+                    <li class="how_works__item">
+                        <article class="how_works__card workcard">
+                            <h3 class="workcard__title">{{ $element.Title }}</h3>
+
+                            <div class="workcard__content">
+                                {{/* Split $element.Content by "\r\n" with template function and loop through */}}
+                                {{ range $index, $element := split $element.Content "\r\n" }}
+                                    <p class="workcard__text">{{ $element }}</p>
+                                {{ end }}
+                            </div>
+                        </article>
+                    </li>
+                {{ end }}
+            </ol>
+
+            <div class="how_works__buttons">
+                <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="button how_works__button"
+                   target="_blank">
+                    Сделать заказ через whats app
+                </a>
+                <a href="https://t.me/{{ .Options.telegram.Value }}" class="button how_works__button"
+                   target="_blank">
+                    Сделать заказ через telegram
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- END Homepage How it works section -->
+
+    <!-- Homepage Commission services section -->
+    <section class="home__section home__section--full home__commission_services">
+        <div class="text_wrapper commission_services">
+            <h2 class="home__title commission_services__title">
+                {{ .Homepage.Content.CommissionTitle }}
+            </h2>
+
+            <div class="commission_services__content">
+                {{/* Loop throught CommissionCards */}}
+                {{ range $index, $element := .CommissionCards }}
+                    <article class="commission__card commission_card">
+                        <h3 class="commission_card__title">{{$element.Title}}</h3>
+
+                        <div class="commission_card__content">
+                            {{/* Split $element.Content by "\r\n" with template function and loop through */}}
+                            {{ range $index, $element := split $element.Content "\r\n" }}
+                                <p class="commission_card__text">{{ $element }}</p>
+                            {{ end }}
+                        </div>
+                    </article>
+                {{ end }}
+            </div>
+
+            <div class="commission_services__buttons">
+                <a href="#" class="button commission_services__button">заказать аутентификацию entrupy</a>
+                <a href="#" class="button commission_services__button">TUFF STUFF VINTAGE</a>
+            </div>
+        </div>
+    </section>
+    <!-- END Homepage Commission services section -->
+
+    <!-- Homepage Why Us section -->
+    <section class="home__section home__why_us">
+        <div class="text_wrapper why_us">
+            <h2 class="home__title why_us__title">
+                {{ .Homepage.Content.WhyUsTitle }}
+            </h2>
+
+            <div class="why_us__content">
+                {{/* Loop through WhyUsCards */}}
+                {{ range $index, $whyUsCard := .WhyUsCards }}
+                    <article class="why_us__card why_us_card">
+                        <h3 class="why_us_card__title">
+                            {{ $whyUsCard.Title }}
+                        </h3>
+                        <p class="why_us_card__text">
+                            {{ $whyUsCard.Content }}
+                        </p>
+                    </article>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    <!-- END Homepage Why Us section -->
+
+    <!-- Homepage Image Grid section -->
+    <section class="home__image_grid">
+        <div class="text_wrapper image_grid">
+            {{/* Loop through GridImageURLs */}}
+            {{ range $index, $element := .GridImageURLs }}
+                <div class="image_grid__item">
+                    <img src="/{{$element}}" alt="&#215;">
+                </div>
+            {{ end }}
+        </div>
+    </section>
+    <!-- END Homepage Image Grid section -->
+
+{{ end }}

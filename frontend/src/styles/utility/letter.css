@@ -1,0 +1,13 @@
+.letter {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 0;
+	display: inline-block;
+	min-height: 300px;
+	width: 16px;
+	text-align: center;
+	vertical-align: top;
+	transform-origin: bottom;
+}
+

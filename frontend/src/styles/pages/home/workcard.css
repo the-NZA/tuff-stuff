@@ -1,0 +1,19 @@
+.workcard__title {
+	font-size: 1.3rem;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+.workcard__content {
+	margin-top: var(--offset);
+}
+
+.workcard__text {
+	margin: 0;
+	text-transform: uppercase;
+	line-height: 1.5;
+}
+
+.workcard__text:not(:last-child) {
+	margin-bottom: var(--offsetHalf);
+}

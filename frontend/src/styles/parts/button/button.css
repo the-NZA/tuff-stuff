@@ -1,0 +1,33 @@
+.button {
+	padding: var(--offsetHalf);
+
+	border: 2px solid rgb(var(--black));
+	border-radius: var(--offsetQuarter);
+
+	color: rgb(var(--black));
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	font-size: 1.1rem;
+	font-weight: bold;
+
+	transition: var(--hoverTransition);
+}
+
+.button:hover {
+	background-color: rgb(var(--black));
+	color: rgb(var(--white));
+}
+
+@media (--smaller-screen) {
+	.button {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+}

@@ -1,0 +1,3 @@
+:root {
+	--headerShadow: 0px 0px 10px rgba(var(--black), var(--alpha30));
+}

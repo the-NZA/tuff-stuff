@@ -1,0 +1,10 @@
+:root {
+	--siteWidth: 1200px;
+	--contentWidth: calc(var(--siteWidth) * 0.75);
+
+	--offset: 32px;
+	--offsetHalf: calc(var(--offset) / 2);
+	--offsetQuarter: calc(var(--offset) / 4);
+	--offsetTwice: calc(var(--offset) * 2);
+	--offsetTriple: calc(var(--offset) * 3);
+}

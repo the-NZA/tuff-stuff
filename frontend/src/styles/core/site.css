@@ -1,0 +1,63 @@
+.wrapper {
+	max-width: var(--siteWidth);
+	width: 100%;
+	margin: 0 auto;
+}
+
+.text_wrapper {
+	max-width: var(--contentWidth);
+	width: 100%;
+	margin: 0 auto;
+}
+
+.site-body {
+	min-height: 100vh;
+
+	display: grid;
+	grid-template-rows: 1fr min-content;
+}
+
+/* Styles for non-home pages with static header */
+.site-body--with-header {
+	grid-template-rows: min-content 1fr min-content;
+}
+
+.site-body--with-header .site-header {
+	position: static;
+	background-color: rgb(var(--white));
+	box-shadow: var(--headerShadow);
+}
+
+.site-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	z-index: 3;
+
+	padding: var(--offsetHalf) var(--offset);
+	transition: var(--hoverTransition);
+}
+
+.site-main {
+	background-color: rgb(var(--paleYellow));
+}
+
+.site-footer {
+	background-color: rgb(var(--blue));
+}
+
+/* Colored header with shadows when active */
+.site-header--active {
+	background-color: rgb(var(--white));
+	box-shadow: var(--headerShadow);
+}
+
+.site-header--active .header__logo a {
+	color: rgb(var(--black));
+}
+
+.site-header--active .header__menu_link {
+	color: rgb(var(--black));
+}

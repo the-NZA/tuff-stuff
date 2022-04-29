@@ -1,0 +1,38 @@
+.shopping_service {
+	display: grid;
+	grid-template-rows: 1fr 3fr;
+	gap: var(--offsetHalf) ;
+}
+
+/*
+.shopping_service:not(:last-child) {
+	margin-bottom: var(--offset);
+}
+*/
+
+.shopping_service__title {
+	text-transform: uppercase;
+	font-size: 1.5rem;
+	margin: 0;
+}
+
+.shopping_service__content {
+	text-transform: uppercase;
+	align-self: start;
+	line-height: 1.5;
+	margin: 0;
+}
+
+.shopping_service__text {
+	margin: 0;
+}
+
+@media (--smaller-screen) {
+	.shopping_service__title {
+		font-size: 1.3rem;
+	}
+
+	.shopping_service {
+		grid-template-rows: auto;
+	}
+}

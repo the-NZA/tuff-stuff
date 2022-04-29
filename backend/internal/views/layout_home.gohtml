@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+
+    <title>Tuff Stuff | Personal Shopping & Fashion Concierge</title>
+
+    <script type="module" crossorigin src="/static/scripts/index.cee5468b.js"></script>
+    <link rel="stylesheet" href="/static/styles/style.06c2a0a8.css">
+</head>
+
+<body class="site-body">
+
+<header class="site-header">
+    <div class="wrapper header ">
+        <div class="header__logo">
+            <a href="/">
+                Tuff Stuff
+            </a>
+        </div>
+
+        <nav class="header__nav">
+            {{/* If homepage lang equal to "ru" mark first list with active class, if lang equal to "en" mark second one */}}
+            <ul class="header__menu_list ">
+                <li class="header__menu_item">
+                    <a href="/ru"
+                       class="header__menu_link {{ if eq .Homepage.Lang "ru" }}header__menu_link--active{{end}}">ru</a>
+                </li>
+                <li class="header__menu_item">
+                    <a href="/en"
+                       class="header__menu_link {{ if eq .Homepage.Lang "en" }}header__menu_link--active{{end}}">en</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="site-main home">
+    {{block "content" .}}{{end}}
+</main>
+
+<footer class="site-footer">
+    <div class="wrapper footer">
+        <p class="footer__text">{{if eq .Homepage.Lang "ru"}}все права защищены.{{else}} all rights reserved.{{end}}
+            tuff stuff club</p>
+    </div>
+</footer>
+
+</body>
+
+</html>

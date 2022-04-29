@@ -1,0 +1,12 @@
+.why_us__card {
+	text-transform: uppercase;
+}
+
+.why_us_card__title {
+	margin: 0 0 var(--offset) 0;
+}
+
+.why_us_card__text {
+	margin: 0;
+	line-height: 1.5;
+}

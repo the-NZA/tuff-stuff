@@ -1,0 +1,18 @@
+.commission_services {
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+	gap: var(--offsetTwice);
+}
+
+.commission_services__buttons {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--offset);
+}
+
+@media (--small-screen) {
+	.commission_services__buttons {
+		grid-template-columns: 1fr;
+		gap: var(--offsetHalf);
+	}
+}

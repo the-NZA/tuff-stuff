@@ -1,0 +1,6 @@
+@custom-media --tall-screen screen and (height >= 1440px);
+@custom-media --small-screen screen and (width <= 768px);
+@custom-media --620-screen screen and (width <= 620px);
+@custom-media --smaller-screen screen and (width <= 540px);
+@custom-media --extra-small-screen screen and (width <= 480px);
+@custom-media --tiny-screen screen and (width <= 380px);

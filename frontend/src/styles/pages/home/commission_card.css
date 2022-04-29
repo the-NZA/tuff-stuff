@@ -1,0 +1,30 @@
+.commission_card:not(:last-of-type) {
+	margin-bottom: var(--offsetTwice);
+}
+
+.commission_card__title {
+	margin: 0 0 var(--offset) 0;
+	text-transform: uppercase;
+	font-size: 1.4rem;
+}
+
+.commission_card__text {
+	word-break: break-word;
+	text-transform: uppercase;
+	margin: 0 0 var(--offsetHalf) 0;
+	line-height: 1.5;
+}
+
+.commission_card__text:last-of-type {
+	margin-bottom: 0;
+}
+
+@media (--small-screen) {
+	.commission_card__title {
+		font-size: 1.2rem;
+	}
+
+	.commission_card:not(:last-of-type) {
+		margin-bottom: var(--offset);
+	}
+}

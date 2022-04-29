@@ -1,0 +1,25 @@
+.shopping_services {
+	display: grid;
+	grid-template-rows: min-content max-content;
+	gap: var(--offsetTwice);
+
+	align-content: center;
+}
+
+.shopping_services__content {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--offset);
+}
+
+@media (--small-screen) {
+	.shopping_services__content {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (--smaller-screen) {
+	.shopping_services {
+		gap: var(--offset);
+	}
+}

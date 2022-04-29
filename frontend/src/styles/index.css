@@ -1,0 +1,35 @@
+/* Import core styles */
+@import url("./core/global.css");
+@import url("./core/colors.css");
+@import url("./core/sizes.css");
+@import url("./core/media_queries.css");
+@import url("./core/transitions.css");
+@import url("./core/site.css");
+@import url("./core/shadows.css");
+
+/* Import utility styles */
+@import url("./utility/letter.css");
+
+/* Import header styles */
+@import url("./parts/header/header.css");
+
+/* Import footer styles */
+@import url("./parts/footer/footer.css");
+
+/* Import buttons styles */
+@import url("./parts/button/button.css");
+
+/* Import home page styles */
+@import url("./pages/home/home.css");
+@import url("./pages/home/hero.css");
+@import url("./pages/home/about.css");
+@import url("./pages/home/shopping_services.css");
+@import url("./pages/home/shopping_service.css");
+@import url("./pages/home/working_with.css");
+@import url("./pages/home/how_works.css");
+@import url("./pages/home/workcard.css");
+@import url("./pages/home/commission_services.css");
+@import url("./pages/home/commission_card.css");
+@import url("./pages/home/why_us.css");
+@import url("./pages/home/why_us_card.css");
+@import url("pages/home/image_grid.css");

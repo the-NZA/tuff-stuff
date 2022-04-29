@@ -1,0 +1,7 @@
+{
+	"domain": "",
+	"port": 8080,
+	"is_debug_log": true,
+	"db_path": "./sqlite_data/tuff.db",
+	"secret_key": "super-key"
+}
