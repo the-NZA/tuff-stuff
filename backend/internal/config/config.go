@@ -16,6 +16,7 @@ type Config struct {
 	SecretKey   string `json:"secret_key"`
 	Port        int    `json:"port"`
 	IsDebugLogs bool   `json:"is_debug_log"`
+	ServeStatic bool   `json:"serve_static"`
 }
 
 // NewConfigFromFile reads config from file with given path.

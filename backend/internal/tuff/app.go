@@ -53,10 +53,14 @@ func newLogger(isDebug bool) lgr.L {
 // configureRouter sets up application router.
 func (app *App) configureRouter() {
 	app.router.Mount("/", app.pagesRouter())
-	app.router.Mount("/static", app.staticRouter())
-	app.router.Mount("/uploads", app.uploadsRouter())
 	app.router.Mount("/api/v1", app.apiRouter())
 	app.router.Mount("/auth/v1", app.authRouter())
+
+	// Self serve static files without external servers(ex. nginx).
+	if app.config.ServeStatic {
+		app.router.Mount("/static", app.staticRouter())
+		app.router.Mount("/uploads", app.uploadsRouter())
+	}
 }
 
 // configureServer sets up application server.
