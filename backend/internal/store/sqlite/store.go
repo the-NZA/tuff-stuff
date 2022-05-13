@@ -26,7 +26,7 @@ type Store struct {
 
 // NewStore returns Storer with given config.
 func NewStore(c config.Config) (storer.Storer, error) {
-	dbURL := fmt.Sprintf("file:%s?_foreign_keys=on", c.DbPath)
+	dbURL := fmt.Sprintf("file:%s?_foreign_keys=on", c.DBPath)
 	db, err := sqlx.Connect("sqlite3", dbURL)
 	if err != nil {
 		return nil, err

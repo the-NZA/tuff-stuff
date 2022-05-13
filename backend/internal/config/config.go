@@ -12,7 +12,7 @@ import (
 // Config struct includes application configuration.
 type Config struct {
 	Domain      string `json:"domain"`
-	DbPath      string `json:"db_path"`
+	DBPath      string `json:"db_path"`
 	SecretKey   string `json:"secret_key"`
 	Port        int    `json:"port"`
 	IsDebugLogs bool   `json:"is_debug_log"`
