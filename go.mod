@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.0
+	github.com/go-chi/cors v1.2.1
 	github.com/golang-jwt/jwt/v4 v4.4.0
 	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
 )

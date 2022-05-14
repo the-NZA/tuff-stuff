@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/go-pkgz/lgr"
 	"github.com/the-NZA/tuff-stuff/backend/internal/config"
 	"github.com/the-NZA/tuff-stuff/backend/internal/store/storer"
@@ -52,6 +53,17 @@ func newLogger(isDebug bool) lgr.L {
 
 // configureRouter sets up application router.
 func (app *App) configureRouter() {
+	// Configure CORS
+	app.router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300, // Maximum value not ignored by any of major browsers
+	}))
+
+	// Configure routes
 	app.router.Mount("/", app.pagesRouter())
 	app.router.Mount("/api/v1", app.apiRouter())
 	app.router.Mount("/auth/v1", app.authRouter())
