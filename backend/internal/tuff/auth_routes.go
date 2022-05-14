@@ -76,7 +76,7 @@ func (app *App) loginHandler() http.HandlerFunc {
 			HttpOnly: true,
 			Expires:  expireTime,
 			Path:     "/",
-			// Domain:   app.config.Domain,
+			Domain:   app.config.Domain,
 		})
 
 		app.respondJSON(w, response{

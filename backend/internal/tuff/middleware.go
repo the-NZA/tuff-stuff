@@ -87,7 +87,7 @@ func (app *App) authMiddleware(next http.Handler) http.Handler {
 				HttpOnly: true,
 				Expires:  expireTime,
 				Path:     "/",
-				// Domain:   app.config.Domain,
+				Domain:   app.config.Domain,
 			})
 
 		}
