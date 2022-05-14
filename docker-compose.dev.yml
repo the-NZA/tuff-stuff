@@ -1,0 +1,13 @@
+services:
+  nginx:
+    image: nginx:1.21.6-alpine
+    container_name: tuff_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/app/static
+      - ./uploads:/app/uploads
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc/nginx/tuff.conf:/etc/nginx/conf.d/tuff.conf
+      # - ./etc/nginx/tuff.admin.conf:/etc/nginx/conf.d/tuff.admin.conf
