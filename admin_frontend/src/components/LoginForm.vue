@@ -5,11 +5,13 @@ import {ref} from "vue"
 import axios, {AxiosError} from "axios";
 import {useRouter} from "vue-router";
 import {StatusCodes as code} from "http-status-codes";
+import Loader from "../components/Loader.vue";
 
 const router = useRouter()
 const username = ref("")
 const password = ref("")
 const loginError = ref("")
+const isLoading = ref(false)
 
 const resetError = () => {
 	loginError.value = ""
@@ -17,13 +19,13 @@ const resetError = () => {
 
 const login = async () => {
 	loginError.value = ""
-	console.log(username.value, password.value)
+	isLoading.value = true
 
 	if (username.value === "" || password.value === "") {
 		loginError.value = "Заполните все поля"
+		isLoading.value = false
 		return
 	}
-
 
 	try {
 		const res = await HTTP.post<Response<{ login: string, token: string }>>(
@@ -41,9 +43,13 @@ const login = async () => {
 		)
 
 		console.log(res.data.data)
+		isLoading.value = false
+
 		await router.push({name: "Index"})
 
 	} catch (err) {
+		isLoading.value = false
+
 		if (axios.isAxiosError(err) && (err as AxiosError).response) {
 			const e = err as AxiosError<Response<{ login: string, token: string }>>
 
@@ -65,8 +71,12 @@ const login = async () => {
 </script>
 
 <template>
+	<Loader v-if="isLoading"/>
+
 	<div class="login">
-		<h1 class="login__title">TUFF STUFF</h1>
+		<Transition name="fade">
+			<h1 class="login__title">TUFF STUFF</h1>
+		</Transition>
 
 		<form class="login__form loginForm" @submit.prevent="login">
 			<div class="loginForm__group">

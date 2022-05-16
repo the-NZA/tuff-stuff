@@ -23,12 +23,14 @@ onBeforeMount(() => {
 	--white: 255, 255, 255;
 	--gray: 100, 100, 100;
 	--gray-light: 250, 250, 250;
-	--red: 255, 0, 0;
+	--red: 225, 97, 98;
+	--light-orange: 249, 188, 100;
 	--purple: 128, 0, 128;
 
 	/* opacity */
 	--alpha100: 1;
 	--alpha50: 0.5;
+	--alpha35: 0.35;
 	--alpha25: 0.25;
 
 	/* offsets */
