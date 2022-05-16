@@ -6,6 +6,7 @@ uploads/
 sqlite_data/
 etc/*
 !etc/dev*
+!etc/nginx
 
 node_modules/
 dist/
