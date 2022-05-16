@@ -1,12 +1,12 @@
 <template>
-  <Navigation />
-  <img alt="Vue logo" src="../assets/logo.png"/>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite"/>
+	<PageView>
+		<Dashboard/>
+	</PageView>
 </template>
 
 <script setup lang="ts">
-import HelloWorld from '../components/HelloWorld.vue';
-import Navigation from '../components/Navigation.vue';
+import PageView from '../components/PageView.vue';
+import Dashboard from '../components/Dashboard.vue';
 </script>
 
 <style scoped>

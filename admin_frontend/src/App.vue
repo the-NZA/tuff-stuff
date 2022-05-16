@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import {useAuthStore} from "./store/auth";
 import {useRouter} from "vue-router";
 
-const authStore = useAuthStore();
 const router = useRouter();
 
 onBeforeMount(() => {
@@ -50,6 +48,7 @@ onBeforeMount(() => {
 	--mainTransition: all 150ms ease-in-out;
 
 	/* shadows */
+	--neoShadow: 20px 20px 40px rgb(200, 200, 200), -20px -20px 40px #ffffff;
 
 }
 
