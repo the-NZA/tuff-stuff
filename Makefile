@@ -33,3 +33,7 @@ create_image:
 .PHONY: compose_up
 compose_up:
 	docker compose -f docker-compose.dev.yml up
+
+.PHONY: compose_down
+compose_down:
+	docker compose -f docker-compose.dev.yml down
