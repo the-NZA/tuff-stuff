@@ -13,11 +13,11 @@ import Navigation from "./Navigation.vue"
 				<Navigation/>
 			</div>
 		</header>
-		<div class="page__body">
+		<main class="page__body">
 			<div class="wrapper">
 				<slot></slot>
 			</div>
-		</div>
+		</main>
 	</div>
 </template>
 
