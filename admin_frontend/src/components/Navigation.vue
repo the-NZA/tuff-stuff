@@ -11,5 +11,22 @@
 </script>
 
 <style scoped>
+.navigation a:not(:last-child) {
+	margin-right: var(--offset);
+}
 
+.navigation a {
+	color: rgb(var(--gray));
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+.navigation a.router-link-active {
+	color: rgb(var(--black));
+}
+
+.navigation a:hover {
+	color: rgb(var(--black));
+}
 </style>

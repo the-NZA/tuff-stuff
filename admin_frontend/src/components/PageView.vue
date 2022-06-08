@@ -26,7 +26,7 @@ import Navigation from "./Navigation.vue"
 	display: grid;
 	grid-template-rows: min-content 1fr;
 	min-height: 100vh;
-	gap: var(--offset);
+	gap: var(--offset_half);
 }
 
 .page__header {
@@ -34,14 +34,15 @@ import Navigation from "./Navigation.vue"
 	max-width: var(--siteWidth);
 
 	margin: 0 auto;
-	padding: var(--offset_half) 0;
+	padding: var(--offset_half) var(--offset);
 
 	border-bottom: 1px solid rgb(var(--purple));
 
 	display: grid;
-	grid-template-columns: min-content 1fr;
+	grid-template-columns: min-content max-content;
 
 	align-items: center;
+	justify-content: space-between;
 	gap: var(--offset_twice);
 }
 
@@ -52,7 +53,6 @@ import Navigation from "./Navigation.vue"
 }
 
 .page__nav {
-	padding: var(--offset_half);
 }
 
 .page__body {
