@@ -20,6 +20,8 @@
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 1.1rem;
+
+	transition: var(--mainTransition);
 }
 
 .navigation a.router-link-active {
