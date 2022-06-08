@@ -23,7 +23,7 @@
 <style scoped>
 .dashboard__cards {
 	display: grid;
-	grid-gap: var(--offset);
+	grid-gap: var(--offset_twice);
 
 	grid-template-columns: repeat(2, minmax(200px, 1fr));
 	grid-template-rows: repeat(2, minmax(300px, 1fr));
