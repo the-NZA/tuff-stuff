@@ -48,7 +48,7 @@ onBeforeMount(() => {
 	--mainTransition: all 150ms ease-in-out;
 
 	/* shadows */
-	--neoShadow: 20px 20px 40px rgb(200, 200, 200), -20px -20px 40px #ffffff;
+	--neoShadow: 15px 15px 50px rgb(210, 210, 210), -15px -15px 50px #ffffff;
 
 }
 
@@ -68,7 +68,7 @@ body {
 	font-family: system-ui;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
+
 	color: rgb(var(--text-black));
 
 	margin: 0;
