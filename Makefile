@@ -28,4 +28,4 @@ buildf:
 # Docker commands
 .PHONY: create_image
 create_image:
-	docker build -t $(APP):latest .
+	docker build --no-cache -t $(APP):latest .
