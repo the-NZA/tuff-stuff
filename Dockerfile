@@ -1,15 +1,17 @@
 ## Step 1
-FROM golang:1.18.3-alpine as builder
+FROM golang:1.18.3 as builder
+
+ADD backend /app/backend
 
 WORKDIR /app
 
-COPY go.mod ./
+COPY go.* ./
 
 RUN go mod download
 
-COPY ./backend ./
+#RUN go get -u ./...
 
-RUN go build -v ./cmd/tuff
+RUN go build -v -o tuff ./backend/cmd/tuff
 
 
 ## Step 2
