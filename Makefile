@@ -24,3 +24,8 @@ start:
 .PHONY: buildf
 buildf:
 	cd frontend && npm run build
+
+# Docker commands
+.PHONY: create_image
+create_image:
+	docker build -t $(APP):latest .
