@@ -111,7 +111,6 @@ const login = async () => {
 </template>
 
 <style scoped lang="postcss">
-
 .login {
 	position: relative;
 

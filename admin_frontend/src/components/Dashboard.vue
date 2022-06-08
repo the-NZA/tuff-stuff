@@ -17,7 +17,6 @@
 				<router-link :to="{ name: 'Options' }">Настройки</router-link>
 			</div>
 		</div>
-
 	</div>
 </template>
 

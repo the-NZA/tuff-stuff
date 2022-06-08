@@ -29,3 +29,7 @@ buildf:
 .PHONY: create_image
 create_image:
 	docker build --no-cache -t $(APP):latest .
+
+.PHONY: compose_up
+compose_up:
+	docker compose -f docker-compose.dev.yml up
