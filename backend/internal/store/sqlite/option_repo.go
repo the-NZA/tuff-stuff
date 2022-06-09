@@ -73,3 +73,33 @@ func (o OptionRepo) GetAll() ([]model.Option, error) {
 
 	return options, nil
 }
+
+// UpdateMultiple updates multiple options with transaction wrapper.
+func (o *OptionRepo) UpdateMultiple(options []model.Option) ([]model.Option, error) {
+	// Begin transaction
+	tx, err := o.db.Beginx()
+	if err != nil {
+		return nil, err
+	}
+
+	// Update options
+	for _, option := range options {
+		_, err = tx.Exec(
+			"UPDATE options SET value = ? WHERE id = ?",
+			option.Value,
+			option.ID,
+		)
+		if err != nil {
+			_ = tx.Rollback()
+			return nil, err
+		}
+	}
+
+	// Commit transaction
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+
+	return options, nil
+}

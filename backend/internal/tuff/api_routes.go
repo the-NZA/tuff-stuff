@@ -64,6 +64,7 @@ func (app *App) apiRouter() http.Handler {
 		r.Post("/", app.optionCreateHandler())
 		r.Get("/", app.optionGetAllHandler())
 		r.Patch("/", app.optionUpdateValueHandler())
+		r.Put("/", app.optionUpdateMultipleHandler())
 	})
 
 	// Homepages routes

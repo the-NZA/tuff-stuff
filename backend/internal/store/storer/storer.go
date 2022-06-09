@@ -55,6 +55,7 @@ type WhyUsCardRepo interface {
 type OptionRepo interface {
 	Create(option model.Option) (model.Option, error)
 	UpdateValue(option model.Option) (model.Option, error)
+	UpdateMultiple(options []model.Option) ([]model.Option, error)
 	GetAll() ([]model.Option, error)
 }
 
