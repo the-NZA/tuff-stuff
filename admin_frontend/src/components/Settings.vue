@@ -98,6 +98,9 @@ const save = async () => {
 	isSuccess.value = false;
 
 	try {
+		// JSON.stringify() used for sending data to server
+		// because axios add "data" property to request body,
+		// and it is not allowed in PUT request handler in server
 		await HTTP.put<Response<Option[]>>("/api/v1/option", JSON.stringify(options));
 
 		isSuccess.value = true;
