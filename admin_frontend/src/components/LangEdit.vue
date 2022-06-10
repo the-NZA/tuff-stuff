@@ -31,6 +31,7 @@ import HTTP from "../util/HTTP";
 import {AxiosError} from "axios";
 import {Response} from "../types/Response";
 import {Homepage} from "../types/Homepage";
+import {Delay} from "../util/delay";
 
 // State flags
 const isLoading = ref(false);
@@ -68,7 +69,9 @@ const loadData = async () => {
 		console.log(e)
 	}
 
-	isLoading.value = false;
+	Delay(() => {
+		isLoading.value = false;
+	});
 }
 
 // Load data on component first mount

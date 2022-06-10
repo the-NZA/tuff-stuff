@@ -6,6 +6,7 @@ import axios, {AxiosError} from "axios";
 import {useRouter} from "vue-router";
 import {StatusCodes as code} from "http-status-codes";
 import Loader from "../components/Loader.vue";
+import {Delay} from "../util/delay";
 
 const router = useRouter()
 const username = ref("")
@@ -23,7 +24,10 @@ const login = async () => {
 
 	if (username.value === "" || password.value === "") {
 		loginError.value = "Заполните все поля"
-		isLoading.value = false
+		Delay(() => {
+			isLoading.value = false;
+		});
+
 		return
 	}
 
@@ -42,13 +46,16 @@ const login = async () => {
 			}
 		)
 
-		console.log(res.data.data)
-		isLoading.value = false
+		Delay(() => {
+			isLoading.value = false;
+		});
 
 		await router.push({name: "Index"})
 
 	} catch (err) {
-		isLoading.value = false
+		Delay(() => {
+			isLoading.value = false;
+		});
 
 		if (axios.isAxiosError(err) && (err as AxiosError).response) {
 			const e = err as AxiosError<Response<{ login: string, token: string }>>

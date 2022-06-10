@@ -43,6 +43,7 @@ import HTTP from "../util/HTTP";
 import {Option} from "../types/Option";
 import {Response} from "../types/Response";
 import {reactive, ref} from "vue";
+import {Delay} from "../util/delay";
 
 const helperText = {
 	email: {
@@ -88,7 +89,9 @@ onBeforeMount(async () => {
 		message.value = "Не удалось загрузить данные с сервера";
 	}
 
-	isLoading.value = false;
+	Delay(() => {
+		isLoading.value = false;
+	});
 });
 
 // Save data to server
@@ -110,7 +113,9 @@ const save = async () => {
 		message.value = "Не удалось сохранить настройки";
 	}
 
-	isLoading.value = false;
+	Delay(() => {
+		isLoading.value = false;
+	});
 }
 
 </script>
