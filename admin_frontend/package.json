@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/starter-kit": "^2.0.0-beta.185",
+    "@tiptap/vue-3": "^2.0.0-beta.91",
     "axios": "^0.27.2",
     "http-status-codes": "^2.2.0",
     "normalize.css": "^8.0.1",

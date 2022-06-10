@@ -1,10 +1,36 @@
 <template>
 	<div class="editPage">
-		<loader v-if="isLoading"/>
+		<loader v-if="isLoading || !isDataLoaded"/>
 
 		<h2 class="editPage__title">Редактирование {{ currentLang }} языка</h2>
 
-		<!-- There is rows -->
+		<template v-if="isDataLoaded">
+
+			<!--About Title-->
+			<div class="editPage__row">
+				<label for="aboutTitle" class="editPage__label">Заголовок блока о компании</label>
+
+				<input
+					v-model="homepage.content.about_title"
+					@input="reset"
+					type="text"
+					class="editPage__input"
+					id="aboutTitle"
+					placeholder="Введите отображаемое название">
+			</div>
+			<!--About Title END-->
+
+			<!--About Text-->
+			<div class="editPage__row">
+				<label for="aboutText" class="editPage__label">Текст блока о компании</label>
+				<multi-text v-model="homepage.content.about_text"
+				            id="aboutText"
+				            class="editPage__multi_text"
+				></multi-text>
+			</div>
+			<!--About Text END-->
+		</template>
+
 
 		<div class="editPage__footer">
 			<button
@@ -25,6 +51,8 @@
 
 <script setup lang="ts">
 import Loader from './Loader.vue';
+import MultiLineText from './MultiLineText.vue';
+import MultiText from './MultiText.vue';
 import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {computed, onBeforeMount, reactive, ref} from "vue";
 import HTTP from "../util/HTTP";
@@ -35,8 +63,16 @@ import {Delay} from "../util/delay";
 
 // State flags
 const isLoading = ref(false);
+const isDataLoaded = ref(false);
 const isError = ref(false);
 const isSuccess = ref(false);
+
+// Reset flags and message
+const reset = () => {
+	isError.value = false;
+	isSuccess.value = false;
+	message.value = "";
+}
 
 const route = useRoute();
 const lang = ref<string>(route.params.lang as string);
@@ -68,6 +104,8 @@ const loadData = async () => {
 		message.value = (e as AxiosError).message;
 		console.log(e)
 	}
+
+	isDataLoaded.value = true;
 
 	Delay(() => {
 		isLoading.value = false;
