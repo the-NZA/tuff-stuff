@@ -1,25 +1,16 @@
 <template>
-  <Navigation/>
-  <h1>This is lang page for {{ lang }}</h1>
+	<page-view>
+		<page-body>
+			<lang-edit/>
+		</page-body>
+	</page-view>
 </template>
 
 <script setup lang="ts">
-import Navigation from '../components/Navigation.vue';
-import {useRoute, onBeforeRouteUpdate} from "vue-router";
-import {ref} from "vue";
-
-const route = useRoute();
-const lang = ref<string>(route.params.lang as string);
-
-// Update the lang ref when the route changes
-// get data from backend
-onBeforeRouteUpdate((to, from) => {
-  lang.value = to.params.lang as string;
-});
-
-
+import PageView from '../components/PageView.vue';
+import PageBody from "../components/PageBody.vue";
+import LangEdit from "../components/LangEdit.vue";
 </script>
 
 <style scoped>
-
 </style>

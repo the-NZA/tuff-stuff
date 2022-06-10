@@ -3,7 +3,7 @@ import {useAuthStore} from "../store/auth";
 import {withBaseSlug} from "../util/withBaseSlug";
 
 import HTTP from "../util/http";
-import {Response} from "../types/response";
+import {Response} from "../types/Response";
 import axios, {AxiosError} from "axios";
 
 import Index from "../pages/Index.vue";

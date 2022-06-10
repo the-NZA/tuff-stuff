@@ -1,0 +1,99 @@
+.editPage {
+	display: grid;
+	gap: var(--offset);
+}
+
+.editPage__title {
+	margin: 0;
+
+	font-size: 1.6rem;
+
+	text-align: center;
+}
+
+.editPage__row {
+	padding: var(--offset_half);
+	background-color: rgb(var(--gray-light));
+
+	border: 1px solid rgba(var(--gray), var(--alpha25));
+	border-radius: var(--offset_quarter);
+}
+
+.editPage__label {
+	font-size: 1.1rem;
+	font-weight: bold;
+
+	color: rgb(var(--black));
+
+	display: block;
+
+	margin-bottom: var(--offset_half);
+}
+
+.editPage__snippet {
+	margin: 0 0 var(--offset_half) 0;
+
+	color: rgb(var(--gray));
+
+	font-size: 0.8rem;
+	font-weight: 500;
+}
+
+.editPage__input {
+	width: 100%;
+	max-width: 50%;
+
+	padding: var(--offset_quarter);
+	border: 1px solid rgba(var(--gray), var(--alpha25));
+	border-radius: var(--offset_eight);
+}
+
+.editPage__footer {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	align-items: start;
+	gap: var(--offset);
+}
+
+.editPage__save {
+	min-width: 160px;
+
+	padding: var(--offset_half);
+
+	border: 2px solid rgb(var(--purple));
+	border-radius: var(--offset_eight);
+
+	cursor: pointer;
+	font-weight: bolder;
+
+	color: rgb(var(--purple));
+	background-color: rgb(var(--white));
+
+	transition: var(--mainTransition);
+}
+
+.editPage__save:hover {
+	background-color: rgb(var(--purple));
+	color: rgb(var(--white));
+}
+
+.editPage__error {
+	padding: var(--offset_half);
+	background-color: rgb(var(--red));
+	color: rgb(var(--white));
+	font-weight: bold;
+	border-radius: var(--offset_eight);
+	border: 2px solid rgb(var(--red));
+}
+
+.editPage__success {
+	padding: var(--offset_half);
+
+	background-color: rgb(var(--light-orange));
+	color: rgb(var(--white));
+
+	font-weight: bold;
+	border-radius: var(--offset_eight);
+	border: 2px solid rgb(var(--light-orange));
+	text-shadow: 0 0 1px rgba(var(--gray), var(--alpha50));
+}

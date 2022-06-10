@@ -1,9 +1,9 @@
 <template>
-	<PageView>
-		<PageBody>
-			<Settings/>
-		</PageBody>
-	</PageView>
+	<page-view>
+		<page-body>
+			<settings/>
+		</page-body>
+	</page-view>
 </template>
 
 <script setup lang="ts">

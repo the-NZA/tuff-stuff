@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Response} from "../types/response";
+import {Response} from "../types/Response";
 import HTTP from "../util/HTTP"
 import {ref} from "vue"
 import axios, {AxiosError} from "axios";
