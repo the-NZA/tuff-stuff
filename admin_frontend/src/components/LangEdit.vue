@@ -1,11 +1,10 @@
 <template>
-	<div class="editPage">
+	<div class="editPage" :key="route.path">
 		<loader v-if="isLoading || !isDataLoaded"/>
 
 		<h2 class="editPage__title">Редактирование {{ currentLang }} языка</h2>
 
 		<template v-if="isDataLoaded">
-
 			<!--About Title-->
 			<div class="editPage__row">
 				<label for="aboutTitle" class="editPage__label">Заголовок блока о компании</label>
@@ -23,12 +22,63 @@
 			<!--About Text-->
 			<div class="editPage__row">
 				<label for="aboutText" class="editPage__label">Текст блока о компании</label>
-				<multi-text v-model="homepage.content.about_text"
+				<multi-text v-if="homepage.content.about_text"
+				            v-model="homepage.content.about_text"
 				            id="aboutText"
 				            class="editPage__multi_text"
 				></multi-text>
 			</div>
 			<!--About Text END-->
+
+			<!--Shopping services-->
+			<div class="editPage__row">
+				<label for="shoppingServices" class="editPage__label">
+					Заголовок блока услуг персонального шоппинга
+				</label>
+				<input
+					v-model="homepage.content.shopping_title"
+					@input="reset"
+					type="text"
+					class="editPage__input"
+					id="shoppingServices"
+					placeholder="Введите отображаемый заголовок">
+			</div>
+			<!--Shopping services END-->
+
+			<!--Shopping cards-->
+			<!--Shopping cards END-->
+
+			<!--How it works-->
+			<div class="editPage__row">
+				<label for="howItWorks" class="editPage__label">
+					Заголовок блока как работает сервис персонального шоппинга
+				</label>
+				<input
+					v-model="homepage.content.how_works_title"
+					@input="reset"
+					type="text"
+					class="editPage__input"
+					id="howItWorks"
+					placeholder="Введите отображаемый заголовок">
+			</div>
+			<!--How it works END-->
+
+			<!--How works cards-->
+			<!--How works cards END-->
+
+			<!--Commission services-->
+			<div class="editPage__row">
+				<label for="commissionServices" class="editPage__label">
+					Заголовок блока услуг комиссионного ресурса
+				</label>
+				<input
+					v-model="homepage.content.commission_title"
+					@input="reset"
+					type="text"
+					class="editPage__input"
+					id="commissionServices"
+					placeholder="Введите отображаемый заголовок">
+			</div>
 		</template>
 
 
@@ -51,14 +101,13 @@
 
 <script setup lang="ts">
 import Loader from './Loader.vue';
-import MultiLineText from './MultiLineText.vue';
 import MultiText from './MultiText.vue';
 import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {computed, onBeforeMount, reactive, ref} from "vue";
 import HTTP from "../util/HTTP";
 import {AxiosError} from "axios";
 import {Response} from "../types/Response";
-import {Homepage} from "../types/Homepage";
+import {Homepage, HomepageContent} from "../types/Homepage";
 import {Delay} from "../util/delay";
 
 // State flags
@@ -87,6 +136,9 @@ const loadData = async () => {
 	isError.value = false;
 	isSuccess.value = false;
 	message.value = "";
+
+	// reset homepage
+	homepage.content = <HomepageContent>{};
 
 	try {
 		// Get data from server

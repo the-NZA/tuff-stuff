@@ -3,18 +3,25 @@
 </template>
 
 <script setup lang="ts">
-import {useEditor, EditorContent} from "@tiptap/vue-3";
+import {EditorContent, useEditor} from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-import {watch} from "vue";
+import {onBeforeUnmount, watch} from "vue";
+
+const divider = "\n";
 
 const makeParagraphs = (lines: string[]) => {
+
+	if (lines.length === 0) {
+		return "";
+	}
+
 	// Convert lines to paragraphs
 	const paragraphs = lines.map(line => {
 		return `<p>${line}</p>`;
 	})
 
 	// Join paragraphs
-	return paragraphs.join("\n");
+	return paragraphs.join(divider);
 };
 
 const props = defineProps<{
@@ -25,30 +32,39 @@ const emits = defineEmits<{
 	(e: "update:modelValue", value: string[]): void;
 }>()
 
-const editor = useEditor({
-	content: makeParagraphs(props.modelValue),
-	onUpdate: (value) => {
-		emits("update:modelValue", value.editor.getText({blockSeparator: "\n"}).split("\n"));
-	},
-	editorProps: {
-		attributes: {
-			class: "multiTextEditor"
-		}
-	},
-	extensions: [
-		StarterKit
-	]
-});
+// Helper function to initialize editor
+const initEditor = () => {
+	return useEditor({
+		content: makeParagraphs(props.modelValue),
+		onUpdate: ({editor}) => {
+			emits("update:modelValue", editor.getText({blockSeparator: divider}).split(divider));
+		},
+		editorProps: {
+			attributes: {
+				class: "multiTextEditor"
+			}
+		},
+		extensions: [
+			StarterKit
+		]
+	});
+}
+
+const editor = initEditor()
 
 watch(() => props.modelValue, (value) => {
 	// Compare value with editor value
-	const isSame = editor.value?.getText({blockSeparator: "\n"}) === value.join("\n");
+	const isSame = editor.value?.getText({blockSeparator: divider}) === value.join(divider);
 
 	if (isSame) {
 		return;
 	}
 
-	editor.value?.commands.setContent(value, false)
+	editor.value?.commands.setContent(value || "", false)
+})
+
+onBeforeUnmount(() => {
+	editor.value?.destroy();
 })
 </script>
 
