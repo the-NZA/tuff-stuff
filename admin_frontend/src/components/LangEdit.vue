@@ -79,6 +79,31 @@
 					id="commissionServices"
 					placeholder="Введите отображаемый заголовок">
 			</div>
+			<!--Commission services END-->
+
+			<!--Commission cards-->
+			<!--Commission cards END-->
+
+			<!--Why us-->
+			<div class="editPage__row">
+				<label for="whyUs" class="editPage__label">
+					Заголовок блока почему выбирают нас
+				</label>
+				<input
+					v-model="homepage.content.why_us_title"
+					@input="reset"
+					type="text"
+					class="editPage__input"
+					id="whyUs"
+					placeholder="Введите отображаемый заголовок">
+			</div>
+			<!--Why us END-->
+
+			<!--Why us cards-->
+			<!--Why us cards END-->
+
+			<!--Image Grid-->
+			<!--Image Grid END-->
 		</template>
 
 
