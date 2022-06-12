@@ -127,7 +127,7 @@
 <script setup lang="ts">
 import Loader from './Loader.vue';
 import MultiText from './MultiText.vue';
-import {onBeforeRouteUpdate, useRoute} from "vue-router";
+import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import {computed, onBeforeMount, reactive, ref} from "vue";
 import HTTP from "../util/HTTP";
 import {AxiosError} from "axios";
@@ -148,6 +148,7 @@ const reset = () => {
 	message.value = "";
 }
 
+const router = useRouter();
 const route = useRoute();
 const lang = ref<string>(route.params.lang as string);
 const message = ref("");
@@ -231,6 +232,11 @@ const saveHomepage = async () => {
 
 		isSuccess.value = true;
 		message.value = "Данные успешно сохранены";
+
+		// Reload page
+		Delay(() => {
+			router.go(0)
+		}, 450);
 
 	} catch (e) {
 		isError.value = true;
