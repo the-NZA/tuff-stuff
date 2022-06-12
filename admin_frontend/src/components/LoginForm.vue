@@ -32,7 +32,7 @@ const login = async () => {
 	}
 
 	try {
-		const res = await HTTP.post<Response<{ login: string, token: string }>>(
+		await HTTP.post<Response<{ login: string, token: string }>>(
 			"/auth/v1/login",
 			{
 				login: username.value,
