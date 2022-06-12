@@ -19,6 +19,7 @@ var (
 // apiRouter returns sub router for api.
 func (app *App) apiRouter() http.Handler {
 	router := chi.NewRouter()
+	// TODO: enable auth middleware before go to production.
 	// router.Use(app.authMiddleware) // require auth for api access
 
 	router.Get("/", app.rootAPIHandler())
