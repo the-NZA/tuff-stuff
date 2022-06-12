@@ -204,7 +204,48 @@ onBeforeRouteUpdate(async (to, _) => {
 
 // Save homepage data to server
 const saveHomepage = async () => {
-	console.log("saved");
+	isLoading.value = true;
+	reset();
+
+	// Remove all empty lines in about text array
+	const preparedText = homepage.content.about_text.filter(line => line.trim().length > 0);
+
+	// Check if homepage content's fields are empty
+	if (
+		homepage.content.about_title === "" ||
+		preparedText.length === 0 ||
+		homepage.content.shopping_title === "" ||
+		homepage.content.how_works_title === "" ||
+		homepage.content.commission_title === "" ||
+		homepage.content.why_us_title === ""
+	) {
+		isError.value = true;
+		isLoading.value = false;
+		message.value = "Заполните все поля";
+
+		return
+	}
+
+	try {
+		await HTTP.put<Response<Homepage>>(`/api/v1/homepage/${homepage.id}`, homepage);
+
+		isSuccess.value = true;
+		message.value = "Данные успешно сохранены";
+
+	} catch (e) {
+		isError.value = true;
+		if ((e as AxiosError).response!.status >= 400 && (e as AxiosError).response!.status < 500) {
+			message.value = "Указаны некорректные данные";
+		} else {
+			message.value = (e as AxiosError).message;
+		}
+		message.value = (e as AxiosError).message;
+		console.log((e as AxiosError).response);
+	}
+
+	Delay(() => {
+		isLoading.value = false;
+	});
 }
 
 </script>
