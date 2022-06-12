@@ -13,7 +13,7 @@
 
 <style>
 .loader {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -25,7 +25,9 @@
 	align-items: center;
 	justify-content: center;
 
-	background: rgba(var(--black), var(--alpha35));
+	border-radius: var(--offset_eight);
+
+	background: rgba(var(--gray), var(--alpha25));
 }
 
 .sk-chase {
