@@ -7,10 +7,7 @@ import {EditorContent, useEditor} from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import {onBeforeUnmount, watch} from "vue";
 
-const divider = "\n";
-
-const makeParagraphs = (lines: string[]) => {
-
+const makeParagraphs = (lines: string[], divider: string) => {
 	if (lines.length === 0) {
 		return "";
 	}
@@ -26,6 +23,7 @@ const makeParagraphs = (lines: string[]) => {
 
 const props = defineProps<{
 	modelValue: string[];
+	divider: string;
 }>()
 
 const emits = defineEmits<{
@@ -35,9 +33,9 @@ const emits = defineEmits<{
 // Helper function to initialize editor
 const initEditor = () => {
 	return useEditor({
-		content: makeParagraphs(props.modelValue),
+		content: makeParagraphs(props.modelValue, props.divider),
 		onUpdate: ({editor}) => {
-			emits("update:modelValue", editor.getText({blockSeparator: divider}).split(divider));
+			emits("update:modelValue", editor.getText({blockSeparator: props.divider}).split(props.divider));
 		},
 		editorProps: {
 			attributes: {
@@ -54,7 +52,7 @@ const editor = initEditor()
 
 watch(() => props.modelValue, (value) => {
 	// Compare value with editor value
-	const isSame = editor.value?.getText({blockSeparator: divider}) === value.join(divider);
+	const isSame = editor.value?.getText({blockSeparator: props.divider}) === value.join(props.divider);
 
 	if (isSame) {
 		return;

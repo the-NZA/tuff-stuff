@@ -24,6 +24,7 @@
 				<label for="aboutText" class="editPage__label">Текст блока о компании</label>
 				<multi-text v-if="homepage.content.about_text"
 				            v-model="homepage.content.about_text"
+				            :divider="'\n'"
 				            id="aboutText"
 				            class="editPage__multi_text"
 				></multi-text>
