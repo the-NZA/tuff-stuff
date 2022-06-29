@@ -22,28 +22,46 @@
 <script setup lang="ts">
 import TuffCard from "./TuffCard.vue";
 import {Card} from "../types/Card";
-import {ref} from "vue";
+import {CardType} from "../types/CardType";
 
 const props = defineProps<{
 	cards: Card[],
-	fullWidth?: boolean
+	fullWidth?: boolean,
+	cardType: CardType,
 }>()
 
-const isEdit = ref(false);
+const emits = defineEmits<{
+	(e: "createCard", value: {
+		cardType: CardType,
+	}): void;
+	(e: "editCard", value: {
+		card: Card,
+		cardType: CardType,
+	}): void;
+	(e: "deleteCard", value: {
+		cardID: String,
+		cardType: CardType,
+	}): void;
+}>()
 
 const createCard = () => {
-	console.log("createCard");
+	emits("createCard", {
+		cardType: props.cardType,
+	});
 }
 
 const handleEditCard = (card: Card) => {
-	isEdit.value = true;
-
-	console.log("edit", card);
+	emits("editCard", {
+		card: card,
+		cardType: props.cardType,
+	});
 }
 
 const handleDeleteCard = (cardID: String) => {
-
-	console.log("delete", cardID);
+	emits("deleteCard", {
+		cardID: cardID,
+		cardType: props.cardType,
+	});
 }
 </script>
 

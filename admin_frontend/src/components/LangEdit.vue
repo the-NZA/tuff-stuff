@@ -54,7 +54,11 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="shoppingCards"/>
+					<edit-cards :cards="shoppingCards"
+					            @editCard="handleEditCard"
+					            @deleteCard="handleDeleteCard"
+					            :card-type="CardType.Shopping"
+					/>
 				</div>
 			</div>
 			<!--Shopping cards END-->
@@ -82,7 +86,7 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="howItWorksCards"/>
+					<edit-cards :cards="howItWorksCards" :card-type="CardType.HowWorks"/>
 				</div>
 			</div>
 			<!--How works cards END-->
@@ -110,7 +114,7 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="commissionCards" :full-width="true"/>
+					<edit-cards :cards="commissionCards" :full-width="true" :card-type="CardType.Commission"/>
 				</div>
 			</div>
 			<!--Commission cards END-->
@@ -138,7 +142,7 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="whyUsCards"/>
+					<edit-cards :cards="whyUsCards" :card-type="CardType.WhyUs"/>
 				</div>
 			</div>
 			<!--Why us cards END-->
@@ -176,7 +180,9 @@ import {AxiosError} from "axios";
 import {Response} from "../types/Response";
 import {Card} from "../types/Card";
 import {Homepage, HomepageContent} from "../types/Homepage";
+import {CardType} from "../types/CardType";
 import {Delay} from "../util/delay";
+import SlugByCardType from "../util/SlugByCardType";
 
 // State flags
 const isLoading = ref(false);
@@ -334,6 +340,66 @@ const saveHomepage = async () => {
 	});
 }
 
+// handleEditCard is called when the user clicks the edit button on each card
+const handleEditCard = async (val: any) => {
+	const card = val.card;
+	const cardType = val.cardType;
+
+	isLoading.value = true;
+	reset();
+
+	try {
+		const res = await HTTP.get<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${card.id}`);
+
+		console.log(res.data)
+
+		// Open modal with card data
+
+		isLoading.value = false;
+
+	} catch (e) {
+		isError.value = true;
+		message.value = (e as AxiosError).message;
+		console.log(e)
+	}
+
+}
+
+// handleDeleteCard is called when the user clicks the delete button on each card
+const handleDeleteCard = async (val: any) => {
+	const cardID = val.cardID;
+	const cardType = val.cardType;
+
+	isLoading.value = true;
+	reset();
+
+	try {
+		await HTTP.delete<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${cardID}`);
+
+		isSuccess.value = true;
+		message.value = "Данные успешно удалены";
+
+		// Reload page
+		Delay(() => {
+			router.go(0)
+		}, 450);
+
+	} catch (e) {
+		isError.value = true;
+		console.log(e)
+		if ((e as AxiosError).response!.status >= 400 && (e as AxiosError).response!.status < 500) {
+			message.value = "Указаны некорректные данные";
+		} else {
+			message.value = (e as AxiosError).message;
+		}
+		message.value = (e as AxiosError).message;
+		console.log((e as AxiosError).response);
+	}
+
+	Delay(() => {
+		isLoading.value = false;
+	});
+}
 </script>
 
 <style lang="postcss" scoped>
