@@ -16,13 +16,22 @@
 				Добавить
 			</button>
 		</div>
+
+		<transition>
+			<ModalCardEditor v-if="isShowModal" :card="editableCard" @close="resetModal"/>
+		</transition>
 	</div>
 </template>
 
 <script setup lang="ts">
 import TuffCard from "./TuffCard.vue";
+import ModalCardEditor from "./ModalCardEditor.vue";
 import {Card} from "../types/Card";
 import {CardType} from "../types/CardType";
+import {ref} from "vue";
+
+const isShowModal = ref(false);
+const editableCard = ref<Card>(<Card>{});
 
 const props = defineProps<{
 	cards: Card[],
@@ -32,6 +41,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
 	(e: "createCard", value: {
+		card: Card,
 		cardType: CardType,
 	}): void;
 	(e: "editCard", value: {
@@ -45,9 +55,22 @@ const emits = defineEmits<{
 }>()
 
 const createCard = () => {
-	emits("createCard", {
-		cardType: props.cardType,
-	});
+	isShowModal.value = true;
+
+	// emits("createCard", {
+	// 	card: {
+	// 		id: "",
+	// 		title: "",
+	// 		content: "",
+	// 		lang: "",
+	// 	},
+	// 	cardType: props.cardType,
+	// });
+}
+
+const resetModal = () => {
+	isShowModal.value = false;
+	editableCard.value = <Card>{};
 }
 
 const handleEditCard = (card: Card) => {

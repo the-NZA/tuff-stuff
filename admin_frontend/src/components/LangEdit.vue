@@ -345,8 +345,12 @@ const handleEditCard = async (val: any) => {
 	const card = val.card;
 	const cardType = val.cardType;
 
+
+	return;
+
 	isLoading.value = true;
 	reset();
+
 
 	try {
 		const res = await HTTP.get<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${card.id}`);
