@@ -1,10 +1,11 @@
 <template>
-	<editor-content :editor="editor"/>
+	<editor-content :editor="editor" placeholder="this is placeholder"/>
 </template>
 
 <script setup lang="ts">
 import {EditorContent, useEditor} from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import {Placeholder} from "@tiptap/extension-placeholder";
 import {onBeforeUnmount, watch} from "vue";
 
 const makeParagraphs = (lines: string[], divider: string) => {
@@ -43,8 +44,11 @@ const initEditor = () => {
 			}
 		},
 		extensions: [
-			StarterKit
-		]
+			StarterKit,
+			Placeholder.configure({
+				placeholder: "Начните вводить текст",
+			}),
+		],
 	});
 }
 
@@ -77,6 +81,11 @@ onBeforeUnmount(() => {
 
 .multiTextEditor p:not(:last-child) {
 	margin-bottom: var(--offset_half);
+}
+
+.multiTextEditor p.is-editor-empty:first-child::before {
+	content: attr(data-placeholder);
+	color: rgb(var(--gray));
 }
 
 </style>
