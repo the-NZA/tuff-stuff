@@ -3,7 +3,7 @@
 		<h3 class="card__title">{{ props.card.title }}</h3>
 
 		<div class="card__content">
-			<p v-for="line in prepareContent()" :key="line">
+			<p v-for="line in preparedContent" :key="line">
 				{{ line }}
 			</p>
 		</div>
@@ -36,9 +36,9 @@ const deleteCard = (e: Event) => {
 	emits("deleteCard", props.card.id);
 }
 
-const prepareContent = () => {
+const preparedContent = computed(() => {
 	return props.card.content.split("\r\n")
-}
+})
 </script>
 
 <style lang="postcss" scoped>
