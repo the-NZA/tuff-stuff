@@ -17,7 +17,7 @@
 			</button>
 		</div>
 
-		<transition>
+		<transition name="slide">
 			<ModalCardEditor v-if="isShowModal" :card="editableCard" @close="resetModal"/>
 		</transition>
 	</div>
