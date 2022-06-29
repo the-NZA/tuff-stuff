@@ -370,6 +370,9 @@ const handleDeleteCard = async (val: any) => {
 	const cardID = val.cardID;
 	const cardType = val.cardType;
 
+	// Give the user a chance to cancel the action
+	if (!confirm("Вы действительно хотите удалить эту карточку?")) return;
+
 	isLoading.value = true;
 	reset();
 
