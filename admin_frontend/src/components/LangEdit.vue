@@ -47,6 +47,16 @@
 			<!--Shopping services END-->
 
 			<!--Shopping cards-->
+			<div class="editPage__row">
+				<label for="shoppingCards" class="editPage__label">
+					Карточки услуг персонального шоппинга
+				</label>
+
+				<div class="editPage__cards">
+					<!-- Edit Cards Component -->
+					<edit-cards :cards="shoppingCards"/>
+				</div>
+			</div>
 			<!--Shopping cards END-->
 
 			<!--How it works-->
@@ -65,6 +75,16 @@
 			<!--How it works END-->
 
 			<!--How works cards-->
+			<div class="editPage__row">
+				<label for="howItWorksCards" class="editPage__label">
+					Карточки как работает сервис персонального шоппинга
+				</label>
+
+				<div class="editPage__cards">
+					<!-- Edit Cards Component -->
+					<edit-cards :cards="howItWorksCards"/>
+				</div>
+			</div>
 			<!--How works cards END-->
 
 			<!--Commission services-->
@@ -83,6 +103,16 @@
 			<!--Commission services END-->
 
 			<!--Commission cards-->
+			<div class="editPage__row">
+				<label for="commissionCards" class="editPage__label">
+					Карточки услуг комиссионного ресурса
+				</label>
+
+				<div class="editPage__cards">
+					<!-- Edit Cards Component -->
+					<edit-cards :cards="commissionCards"/>
+				</div>
+			</div>
 			<!--Commission cards END-->
 
 			<!--Why us-->
@@ -101,6 +131,16 @@
 			<!--Why us END-->
 
 			<!--Why us cards-->
+			<div class="editPage__row">
+				<label for="whyUsCards" class="editPage__label">
+					Карточки почему выбирают нас
+				</label>
+
+				<div class="editPage__cards">
+					<!-- Edit Cards Component -->
+					<edit-cards :cards="whyUsCards"/>
+				</div>
+			</div>
 			<!--Why us cards END-->
 
 			<!--Image Grid-->
@@ -128,11 +168,13 @@
 <script setup lang="ts">
 import Loader from './Loader.vue';
 import MultiText from './MultiText.vue';
+import EditCards from './EditCards.vue';
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import {computed, onBeforeMount, reactive, ref} from "vue";
 import HTTP from "../util/HTTP";
 import {AxiosError} from "axios";
 import {Response} from "../types/Response";
+import {Card} from "../types/Card";
 import {Homepage, HomepageContent} from "../types/Homepage";
 import {Delay} from "../util/delay";
 
@@ -156,6 +198,10 @@ const message = ref("");
 const currentLang = computed<string>(() => lang.value === "ru" ? "русского" : "английского");
 
 const homepage = reactive<Homepage>(<Homepage>{})
+const shoppingCards = ref<Card[]>(<Card[]>[])
+const howItWorksCards = ref<Card[]>(<Card[]>[])
+const commissionCards = ref<Card[]>(<Card[]>[])
+const whyUsCards = ref<Card[]>(<Card[]>[])
 
 // loadData is called before the component is mounted or updated
 const loadData = async () => {
@@ -178,6 +224,39 @@ const loadData = async () => {
 		homepage.id = res.data.data.id;
 		homepage.lang = res.data.data.lang;
 		homepage.content = res.data.data.content;
+
+		// Get shopping cards from server
+		const shopRes = await HTTP.get <Response<Card[]>>(`/api/v1/shopping-card`, {
+			params: {
+				lang: lang.value
+			}
+		});
+		shoppingCards.value = shopRes.data.data;
+
+		// Get how it works cards from server
+		const howItWorksRes = await HTTP.get <Response<Card[]>>(`/api/v1/how-works-card`, {
+			params: {
+				lang: lang.value
+			}
+		});
+		howItWorksCards.value = howItWorksRes.data.data;
+
+		// Get commission cards from server
+		const commissionRes = await HTTP.get <Response<Card[]>>(`/api/v1/commission-card`, {
+			params: {
+				lang: lang.value
+			}
+		});
+		commissionCards.value = commissionRes.data.data;
+
+		// Get why us cards from server
+		const whyUsRes = await HTTP.get <Response<Card[]>>(`/api/v1/why-us-card`, {
+			params: {
+				lang: lang.value
+			}
+		});
+		whyUsCards.value = whyUsRes.data.data;
+
 	} catch (e) {
 		isError.value = true;
 		message.value = (e as AxiosError).message;
