@@ -110,7 +110,7 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="commissionCards"/>
+					<edit-cards :cards="commissionCards" :full-width="true"/>
 				</div>
 			</div>
 			<!--Commission cards END-->

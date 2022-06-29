@@ -1,6 +1,6 @@
 <template>
 	<div class="editCards">
-		<div class="editCards__cards">
+		<div class="editCards__cards" :class="{ 'editCards__cards--full-width': props.fullWidth }">
 			<template v-if="props.cards">
 				<tuff-card v-for="c in props.cards" :card="c" @editCard="handleEditCard"
 				           @deleteCard="handleDeleteCard"/>
@@ -25,7 +25,8 @@ import {Card} from "../types/Card";
 import {ref} from "vue";
 
 const props = defineProps<{
-	cards: Card[]
+	cards: Card[],
+	fullWidth?: boolean
 }>()
 
 const isEdit = ref(false);
@@ -57,6 +58,10 @@ const handleDeleteCard = (cardID: String) => {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: var(--offset_half);
+}
+
+.editCards__cards--full-width {
+	grid-template-columns: 1fr;
 }
 
 .editCards__createButton {
