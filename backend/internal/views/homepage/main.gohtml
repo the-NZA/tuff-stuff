@@ -41,7 +41,14 @@
                     {{ range $index, $element := .ShoppingCards }}
                         <article class="shopping_services__card shopping_service">
                             <h3 class="shopping_service__title">{{ $element.Title }}</h3>
-                            <p class="shopping_service__content">{{ $element.Content }}</p>
+
+                            <div class="shopping_service__content">
+                                {{/* Split $element.Content by "\r\n" with template function and loop through */}}
+                                {{ range $index, $element := split $element.Content "\r\n" }}
+                                    <p class="shopping_service__text">{{ $element}}</p>
+                                {{ end }}
+                            </div>
+
                         </article>
                     {{ end }}
                 </div>
