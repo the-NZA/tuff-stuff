@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import {useAuthStore} from "../store/auth";
+import {useMessageStore} from "../store/message";
 import {withBaseSlug} from "../util/withBaseSlug";
 
 import HTTP from "../util/http";
@@ -57,6 +58,10 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
 	const authStore = useAuthStore()
+	const messageStore = useMessageStore()
+
+	// Reset all messages on route change
+	messageStore.Reset();
 
 	// If public route, just continue
 	if (to.matched.some(record => record.meta.public)) {
