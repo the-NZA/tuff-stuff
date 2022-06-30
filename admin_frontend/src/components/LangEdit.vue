@@ -158,12 +158,12 @@
 				class="editPage__save">Сохранить
 			</button>
 
-			<div v-if="isError" class="editPage__error">
-				{{ message }}
+			<div v-if="msgStore.IsError" class="editPage__error">
+				{{ msgStore.ErrorMessage }}
 			</div>
 
-			<div v-if="isSuccess" class="editPage__success">
-				{{ message }}
+			<div v-if="msgStore.IsSuccess" class="editPage__success">
+				{{ msgStore.SuccessMessage }}
 			</div>
 		</div>
 	</div>
@@ -183,24 +183,22 @@ import {Homepage, HomepageContent} from "../types/Homepage";
 import {CardType} from "../types/CardType";
 import {Delay} from "../util/delay";
 import SlugByCardType from "../util/SlugByCardType";
+import {useMessageStore} from "../store/message";
+
+const msgStore = useMessageStore();
 
 // State flags
 const isLoading = ref(false);
 const isDataLoaded = ref(false);
-const isError = ref(false);
-const isSuccess = ref(false);
 
 // Reset flags and message
 const reset = () => {
-	isError.value = false;
-	isSuccess.value = false;
-	message.value = "";
+	msgStore.Reset();
 }
 
 const router = useRouter();
 const route = useRoute();
 const lang = ref<string>(route.params.lang as string);
-const message = ref("");
 const currentLang = computed<string>(() => lang.value === "ru" ? "русского" : "английского");
 
 const homepage = reactive<Homepage>(<Homepage>{})
@@ -212,9 +210,7 @@ const whyUsCards = ref<Card[]>(<Card[]>[])
 // loadData is called before the component is mounted or updated
 const loadData = async () => {
 	isLoading.value = true;
-	isError.value = false;
-	isSuccess.value = false;
-	message.value = "";
+	reset();
 
 	// reset homepage
 	homepage.content = <HomepageContent>{};
@@ -264,8 +260,8 @@ const loadData = async () => {
 		whyUsCards.value = whyUsRes.data.data;
 
 	} catch (e) {
-		isError.value = true;
-		message.value = (e as AxiosError).message;
+		msgStore.SetError((e as AxiosError).message);
+
 		console.log(e)
 	}
 
@@ -306,9 +302,8 @@ const saveHomepage = async () => {
 		homepage.content.commission_title === "" ||
 		homepage.content.why_us_title === ""
 	) {
-		isError.value = true;
 		isLoading.value = false;
-		message.value = "Заполните все поля";
+		msgStore.SetError("Заполните все поля");
 
 		return
 	}
@@ -316,8 +311,7 @@ const saveHomepage = async () => {
 	try {
 		await HTTP.put<Response<Homepage>>(`/api/v1/homepage/${homepage.id}`, homepage);
 
-		isSuccess.value = true;
-		message.value = "Данные успешно сохранены";
+		msgStore.SetSuccess("Данные успешно сохранены");
 
 		// Reload page
 		Delay(() => {
@@ -325,13 +319,12 @@ const saveHomepage = async () => {
 		}, 450);
 
 	} catch (e) {
-		isError.value = true;
 		if ((e as AxiosError).response!.status >= 400 && (e as AxiosError).response!.status < 500) {
-			message.value = "Указаны некорректные данные";
+			msgStore.SetError("Указаны некорректные данные");
 		} else {
-			message.value = (e as AxiosError).message;
+			msgStore.SetError((e as AxiosError).message);
 		}
-		message.value = (e as AxiosError).message;
+		// message.value = (e as AxiosError).message;
 		console.log((e as AxiosError).response);
 	}
 
@@ -362,8 +355,8 @@ const handleEditCard = async (val: any) => {
 		isLoading.value = false;
 
 	} catch (e) {
-		isError.value = true;
-		message.value = (e as AxiosError).message;
+		msgStore.SetError((e as AxiosError).message);
+
 		console.log(e)
 	}
 
@@ -383,8 +376,7 @@ const handleDeleteCard = async (val: any) => {
 	try {
 		await HTTP.delete<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${cardID}`);
 
-		isSuccess.value = true;
-		message.value = "Данные успешно удалены";
+		msgStore.SetSuccess("Карточка успешно удалена");
 
 		// Reload page
 		Delay(() => {
@@ -392,14 +384,14 @@ const handleDeleteCard = async (val: any) => {
 		}, 450);
 
 	} catch (e) {
-		isError.value = true;
 		console.log(e)
 		if ((e as AxiosError).response!.status >= 400 && (e as AxiosError).response!.status < 500) {
-			message.value = "Указаны некорректные данные";
+			msgStore.SetError("Указаны некорректные данные");
 		} else {
-			message.value = (e as AxiosError).message;
+			msgStore.SetError((e as AxiosError).message);
 		}
-		message.value = (e as AxiosError).message;
+
+		// message.value = (e as AxiosError).message;
 		console.log((e as AxiosError).response);
 	}
 
@@ -410,5 +402,4 @@ const handleDeleteCard = async (val: any) => {
 </script>
 
 <style lang="postcss" scoped>
-
 </style>
