@@ -35,7 +35,7 @@ const editableCard = ref<Card>(<Card>{});
 const editableCardType = ref<CardType>();
 
 const props = defineProps<{
-	cards: Card[],
+	cards?: Card[],
 	fullWidth?: boolean,
 	cardType: CardType,
 }>()
