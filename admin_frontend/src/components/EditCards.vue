@@ -11,14 +11,18 @@
 		</div>
 		<div class="editCards__footer">
 			<button
-				@click="createCard"
+				@click="addCard"
 				class="editCards__createButton">
 				Добавить
 			</button>
 		</div>
 
 		<transition name="slide">
-			<ModalCardEditor v-if="isShowModal" :card="editableCard" :card-type="editableCardType" @close="resetModal"/>
+			<ModalCardEditor v-if="isShowModal"
+			                 :card="editableCard"
+			                 :card-type="props.cardType"
+			                 @save="createCard"
+			                 @close="resetModal"/>
 		</transition>
 	</div>
 </template>
@@ -32,7 +36,6 @@ import {ref} from "vue";
 
 const isShowModal = ref(false);
 const editableCard = ref<Card>(<Card>{});
-const editableCardType = ref<CardType>();
 
 const props = defineProps<{
 	cards?: Card[],
@@ -55,7 +58,7 @@ const emits = defineEmits<{
 	}): void;
 }>()
 
-const createCard = () => {
+const addCard = () => {
 	isShowModal.value = true;
 	editableCard.value = <Card>{
 		id: "",
@@ -63,17 +66,13 @@ const createCard = () => {
 		content: "",
 		lang: "",
 	};
-	editableCardType.value = props.cardType;
+}
 
-	// emits("createCard", {
-	// 	card: {
-	// 		id: "",
-	// 		title: "",
-	// 		content: "",
-	// 		lang: "",
-	// 	},
-	// 	cardType: props.cardType,
-	// });
+const createCard = () => {
+	emits("createCard", {
+		card: editableCard.value,
+		cardType: props.cardType,
+	});
 }
 
 const resetModal = () => {

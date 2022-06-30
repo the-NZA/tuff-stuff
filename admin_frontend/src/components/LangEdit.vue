@@ -55,6 +55,7 @@
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
 					<edit-cards :cards="shoppingCards"
+					            @createCard="handleCreateCard"
 					            @editCard="handleEditCard"
 					            @deleteCard="handleDeleteCard"
 					            :card-type="CardType.Shopping"
@@ -332,6 +333,55 @@ const saveHomepage = async () => {
 		isLoading.value = false;
 	});
 }
+
+// handleCreateCard is called when the user clicks the "Create" button in the card editor
+const handleCreateCard = async (val: any) => {
+	const card = val.card as Card;
+	const cardType = val.cardType as CardType;
+
+	// Check if card title or content is empty
+	if (card.title === "" || card.content === "") {
+		msgStore.SetModalError("Заполните все поля");
+		return
+	}
+
+	// Add lang attribute to card
+	card.lang = lang.value;
+
+	isLoading.value = true;
+
+	try {
+		// Create card on server
+		const res = await HTTP.post<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}`, card);
+
+		// Add card to the list of cards
+		switch (cardType) {
+			case CardType.Shopping:
+				shoppingCards.value.push(res.data.data);
+				break;
+			case CardType.HowWorks:
+				howItWorksCards.value.push(res.data.data);
+				break;
+			case CardType.Commission:
+				commissionCards.value.push(res.data.data);
+				break;
+			case CardType.WhyUs:
+				whyUsCards.value.push(res.data.data);
+				break;
+		}
+
+		msgStore.SetSuccess("Карточка успешно создана");
+	} catch (e) {
+		console.log(e)
+
+		msgStore.SetModalError((e as AxiosError).message);
+	}
+
+	Delay(() => {
+		isLoading.value = false;
+	});
+}
+
 
 // handleEditCard is called when the user clicks the edit button on each card
 const handleEditCard = async (val: any) => {

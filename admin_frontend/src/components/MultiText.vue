@@ -7,6 +7,9 @@ import {EditorContent, useEditor} from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
 import {onBeforeUnmount, watch} from "vue";
+import {useMessageStore} from "../store/message";
+
+const msgStore = useMessageStore();
 
 const makeParagraphs = (lines: string[], divider: string) => {
 	if (lines.length === 0) {
@@ -36,6 +39,7 @@ const initEditor = () => {
 	return useEditor({
 		content: makeParagraphs(props.modelValue, props.divider),
 		onUpdate: ({editor}) => {
+			msgStore.Reset();
 			emits("update:modelValue", editor.getText({blockSeparator: props.divider}).split(props.divider));
 		},
 		editorProps: {

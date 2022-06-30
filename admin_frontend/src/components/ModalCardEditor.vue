@@ -15,9 +15,8 @@
 				<div class="editPage__row">
 					<label for="modalCardTitle" class="editPage__label">Название карточки</label>
 
-					<!--					@input="reset"-->
 					<input
-						v-model="editableCard.title"
+						v-model="props.card.title"
 						@input="msgStore.Reset"
 						type="text"
 						class="editPage__input"
@@ -56,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onBeforeMount, ref} from "vue";
+import {computed} from "vue";
 import {useMessageStore} from "../store/message";
 import MultiText from "./MultiText.vue";
 import {Card} from "../types/Card";
@@ -65,17 +64,16 @@ import NameByCardType from "../util/NameByCardType";
 
 const msgStore = useMessageStore();
 
-const editableCard = ref<Card>(<Card>{});
-
 const editableContent = computed({
-	get: () => editableCard.value.content.split("\r\n"),
+	get: () => props.card.content.split("\r\n"),
 	set: (value: string[]) => {
-		editableCard.value.content = value.join("\r\n");
+		props.card.content = value.join("\r\n");
 	},
 });
 
 const emits = defineEmits<{
-	(e: "close"): void;
+	(e: "close"): void,
+	(e: "save"): void,
 }>()
 
 const props = defineProps<{
@@ -92,18 +90,8 @@ const close = () => {
 const save = () => {
 	msgStore.Reset();
 
-	console.log("saved");
-
-	msgStore.SetModalSuccess("Карточка сохранена");
+	emits("save");
 }
-
-onBeforeMount(() => {
-	// copy card to local editableCard
-	editableCard.value.id = props.card.id;
-	editableCard.value.title = props.card.title;
-	editableCard.value.content = props.card.content;
-	editableCard.value.lang = props.card.lang;
-})
 
 </script>
 
