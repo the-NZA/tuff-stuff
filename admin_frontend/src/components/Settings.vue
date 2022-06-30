@@ -16,6 +16,7 @@
 			       :id="opt.name + `Setting`"
 			       type="text"
 			       class="editPage__input"
+			       required
 			       placeholder="Название">
 		</div>
 
@@ -25,12 +26,12 @@
 				class="editPage__save">Сохранить
 			</button>
 
-			<div v-if="isError" class="editPage__error">
-				{{ message }}
+			<div v-if="msgStore.IsError" class="editPage__error">
+				{{ msgStore.ErrorMessage }}
 			</div>
 
-			<div v-if="isSuccess" class="editPage__success">
-				{{ message }}
+			<div v-if="msgStore.IsSuccess" class="editPage__success">
+				{{ msgStore.SuccessMessage }}
 			</div>
 		</div>
 	</div>
@@ -44,6 +45,10 @@ import {Option} from "../types/Option";
 import {Response} from "../types/Response";
 import {reactive, ref} from "vue";
 import {Delay} from "../util/delay";
+
+import {useMessageStore} from '../store/message';
+
+const msgStore = useMessageStore();
 
 const helperText = {
 	email: {
@@ -65,18 +70,13 @@ const helperText = {
 };
 
 const options = reactive<Option[]>([]);
-const message = ref("");
 
 // State flags
 const isLoading = ref(true);
-const isError = ref(false);
-const isSuccess = ref(false);
 
 // Reset flags and message
 const reset = () => {
-	isError.value = false;
-	isSuccess.value = false;
-	message.value = "";
+	msgStore.Reset();
 }
 
 // Load data from server
@@ -85,8 +85,7 @@ onBeforeMount(async () => {
 		const res = await HTTP.get<Response<Option[]>>("/api/v1/option")
 		options.splice(0, options.length, ...res.data.data);
 	} catch (err) {
-		isError.value = true;
-		message.value = "Не удалось загрузить данные с сервера";
+		msgStore.SetError("Не удалось загрузить данные с сервера");
 	}
 
 	Delay(() => {
@@ -97,8 +96,15 @@ onBeforeMount(async () => {
 // Save data to server
 const save = async () => {
 	isLoading.value = true;
-	isError.value = false;
-	isSuccess.value = false;
+	reset();
+
+	// Check if all fields are filled
+	const isValid = options.every(opt => opt.value.length > 0);
+	if (!isValid) {
+		isLoading.value = false;
+		msgStore.SetError("Заполните все поля");
+		return;
+	}
 
 	try {
 		// JSON.stringify() used for sending data to server
@@ -106,11 +112,9 @@ const save = async () => {
 		// and it is not allowed in PUT request handler in server
 		await HTTP.put<Response<Option[]>>("/api/v1/option", JSON.stringify(options));
 
-		isSuccess.value = true;
-		message.value = "Настройки сохранены";
+		msgStore.SetSuccess("Настройки сохранены");
 	} catch (err) {
-		isError.value = true;
-		message.value = "Не удалось сохранить настройки";
+		msgStore.SetError("Не удалось сохранить настройки");
 	}
 
 	Delay(() => {
