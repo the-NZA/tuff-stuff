@@ -18,7 +18,7 @@
 		</div>
 
 		<transition name="slide">
-			<ModalCardEditor v-if="msgStore.IsShowModal"
+			<ModalCardEditor v-if="isShowModal"
 			                 :card="editableCard"
 			                 :card-type="props.cardType"
 			                 @save="createCard"
@@ -32,11 +32,14 @@ import TuffCard from "./TuffCard.vue";
 import ModalCardEditor from "./ModalCardEditor.vue";
 import {Card} from "../types/Card";
 import {CardType} from "../types/CardType";
-import {useMessageStore} from "../store/message";
 import {ref} from "vue";
 
-const msgStore = useMessageStore();
+const isShowModal = ref(false);
 const editableCard = ref<Card>(<Card>{});
+
+const setModalState = (state: boolean) => {
+	isShowModal.value = state;
+};
 
 const props = defineProps<{
 	cards?: Card[],
@@ -59,8 +62,13 @@ const emits = defineEmits<{
 	}): void;
 }>()
 
+// Set some functions visible as template refs
+defineExpose({
+	setModalState,
+})
+
 const addCard = () => {
-	msgStore.SetShowModal(true);
+	setModalState(true);
 	editableCard.value = <Card>{
 		id: "",
 		title: "",
@@ -70,10 +78,6 @@ const addCard = () => {
 }
 
 const createCard = () => {
-	console.log("edit cards saved ")
-	console.log(editableCard.value)
-	console.log(props.cardType)
-
 	emits("createCard", {
 		card: editableCard.value,
 		cardType: props.cardType,
@@ -81,7 +85,7 @@ const createCard = () => {
 }
 
 const resetModal = () => {
-	msgStore.SetShowModal(false);
+	setModalState(false);
 	editableCard.value = <Card>{};
 }
 

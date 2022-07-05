@@ -59,6 +59,7 @@
 					            @editCard="handleEditCard"
 					            @deleteCard="handleDeleteCard"
 					            :card-type="CardType.Shopping"
+					            ref="editShoppingCards"
 					/>
 				</div>
 			</div>
@@ -87,12 +88,12 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards
-						:cards="howItWorksCards"
-						@createCard="handleCreateCard"
-						@editCard="handleEditCard"
-						@deleteCard="handleDeleteCard"
-						:card-type="CardType.HowWorks"/>
+					<edit-cards :cards="howItWorksCards"
+					            :card-type="CardType.HowWorks"
+					            @createCard="handleCreateCard"
+					            @deleteCard="handleDeleteCard"
+					            ref="editHowItWorksCards"
+					/>
 				</div>
 			</div>
 			<!--How works cards END-->
@@ -120,7 +121,13 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="commissionCards" :full-width="true" :card-type="CardType.Commission"/>
+					<edit-cards :cards="commissionCards"
+					            :full-width="true"
+					            :card-type="CardType.Commission"
+					            @createCard="handleCreateCard"
+					            @deleteCard="handleDeleteCard"
+					            ref="editCommissionCards"
+					/>
 				</div>
 			</div>
 			<!--Commission cards END-->
@@ -148,7 +155,12 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="whyUsCards" :card-type="CardType.WhyUs"/>
+					<edit-cards :cards="whyUsCards"
+					            @createCard="handleCreateCard"
+					            @deleteCard="handleDeleteCard"
+					            :card-type="CardType.WhyUs"
+					            ref="editWhyUsCards"
+					/>
 				</div>
 			</div>
 			<!--Why us cards END-->
@@ -212,6 +224,18 @@ const shoppingCards = ref<Card[]>(<Card[]>[])
 const howItWorksCards = ref<Card[]>(<Card[]>[])
 const commissionCards = ref<Card[]>(<Card[]>[])
 const whyUsCards = ref<Card[]>(<Card[]>[])
+
+const editShoppingCards = ref<InstanceType<typeof EditCards>>(null);
+const editHowItWorksCards = ref<InstanceType<typeof EditCards>>(null);
+const editCommissionCards = ref<InstanceType<typeof EditCards>>(null);
+const editWhyUsCards = ref<InstanceType<typeof EditCards>>(null);
+
+const closeEditModal = () => {
+	editShoppingCards.value.setModalState(false);
+	editHowItWorksCards.value.setModalState(false);
+	editCommissionCards.value.setModalState(false);
+	editWhyUsCards.value.setModalState(false);
+}
 
 // loadData is called before the component is mounted or updated
 const loadData = async () => {
@@ -378,8 +402,8 @@ const handleCreateCard = async (val: any) => {
 		msgStore.SetModalSuccess("Карточка успешно создана");
 
 		Delay(() => {
-			reset();
-			msgStore.SetShowModal(false);
+			closeEditModal();
+			msgStore.Reset();
 		});
 	} catch (e) {
 		console.log(e)
@@ -461,5 +485,5 @@ const handleDeleteCard = async (val: any) => {
 }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 </style>
