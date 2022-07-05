@@ -10,6 +10,7 @@ export const useMessageStore = defineStore("message", {
 		isModalSuccess: false,
 		successMessage: "",
 		isSuccess: false,
+		isShowModal: false,
 	}),
 	getters: {
 		ErrorMessage: (state) => state.errorMessage,
@@ -20,6 +21,7 @@ export const useMessageStore = defineStore("message", {
 		IsModalError: (state) => state.isModalError,
 		ModalSuccessMessage: (state) => state.modalSuccessMessage,
 		IsModalSuccess: (state) => state.isModalSuccess,
+		IsShowModal: (state) => state.isShowModal,
 	},
 	actions: {
 		SetError(message: string) {
@@ -37,6 +39,9 @@ export const useMessageStore = defineStore("message", {
 		SetModalSuccess(message: string) {
 			this.modalSuccessMessage = message;
 			this.isModalSuccess = true;
+		},
+		SetShowModal(isShowModal: boolean) {
+			this.isShowModal = isShowModal;
 		},
 		Reset() {
 			this.errorMessage = "";

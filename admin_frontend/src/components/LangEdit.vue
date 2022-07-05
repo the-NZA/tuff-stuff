@@ -87,7 +87,12 @@
 
 				<div class="editPage__cards">
 					<!-- Edit Cards Component -->
-					<edit-cards :cards="howItWorksCards" :card-type="CardType.HowWorks"/>
+					<edit-cards
+						:cards="howItWorksCards"
+						@createCard="handleCreateCard"
+						@editCard="handleEditCard"
+						@deleteCard="handleDeleteCard"
+						:card-type="CardType.HowWorks"/>
 				</div>
 			</div>
 			<!--How works cards END-->
@@ -370,7 +375,12 @@ const handleCreateCard = async (val: any) => {
 				break;
 		}
 
-		msgStore.SetSuccess("Карточка успешно создана");
+		msgStore.SetModalSuccess("Карточка успешно создана");
+
+		Delay(() => {
+			reset();
+			msgStore.SetShowModal(false);
+		});
 	} catch (e) {
 		console.log(e)
 

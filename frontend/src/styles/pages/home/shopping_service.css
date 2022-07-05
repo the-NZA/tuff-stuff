@@ -1,7 +1,7 @@
 .shopping_service {
 	display: grid;
 	grid-template-rows: 1fr 3fr;
-	gap: var(--offsetHalf) ;
+	gap: var(--offsetHalf);
 }
 
 /*
@@ -25,6 +25,10 @@
 
 .shopping_service__text {
 	margin: 0;
+}
+
+.shopping_service__text:not(:last-child) {
+	margin-bottom: var(--offsetHalf);
 }
 
 @media (--smaller-screen) {
