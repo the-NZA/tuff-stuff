@@ -389,16 +389,32 @@ const handleCreateCard = async (val: any) => {
 		// Add card to the list of cards
 		switch (cardType) {
 			case CardType.Shopping:
-				shoppingCards.value.push(res.data.data);
+				if (!shoppingCards.value) {
+					shoppingCards.value = [res.data.data];
+				} else {
+					shoppingCards.value.push(res.data.data);
+				}
 				break;
 			case CardType.HowWorks:
-				howItWorksCards.value.push(res.data.data);
+				if (!howItWorksCards.value) {
+					howItWorksCards.value = [res.data.data];
+				} else {
+					howItWorksCards.value.push(res.data.data);
+				}
 				break;
 			case CardType.Commission:
-				commissionCards.value.push(res.data.data);
+				if (!commissionCards.value) {
+					commissionCards.value = [res.data.data];
+				} else {
+					commissionCards.value.push(res.data.data);
+				}
 				break;
 			case CardType.WhyUs:
-				whyUsCards.value.push(res.data.data);
+				if (!whyUsCards.value) {
+					whyUsCards.value = [res.data.data];
+				} else {
+					whyUsCards.value.push(res.data.data);
+				}
 				break;
 		}
 
