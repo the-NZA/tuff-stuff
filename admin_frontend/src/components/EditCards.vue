@@ -37,6 +37,10 @@ import {ref} from "vue";
 const isShowModal = ref(false);
 const editableCard = ref<Card>(<Card>{});
 
+const setModalState = (state: boolean) => {
+	isShowModal.value = state;
+};
+
 const props = defineProps<{
 	cards?: Card[],
 	fullWidth?: boolean,
@@ -58,8 +62,13 @@ const emits = defineEmits<{
 	}): void;
 }>()
 
+// Set some functions visible as template refs
+defineExpose({
+	setModalState,
+})
+
 const addCard = () => {
-	isShowModal.value = true;
+	setModalState(true);
 	editableCard.value = <Card>{
 		id: "",
 		title: "",
@@ -76,7 +85,7 @@ const createCard = () => {
 }
 
 const resetModal = () => {
-	isShowModal.value = false;
+	setModalState(false);
 	editableCard.value = <Card>{};
 }
 

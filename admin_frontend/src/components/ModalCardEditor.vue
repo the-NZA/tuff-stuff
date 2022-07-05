@@ -64,13 +64,6 @@ import NameByCardType from "../util/NameByCardType";
 
 const msgStore = useMessageStore();
 
-const editableContent = computed({
-	get: () => props.card.content.split("\r\n"),
-	set: (value: string[]) => {
-		props.card.content = value.join("\r\n");
-	},
-});
-
 const emits = defineEmits<{
 	(e: "close"): void,
 	(e: "save"): void,
@@ -80,6 +73,15 @@ const props = defineProps<{
 	card: Card,
 	cardType: CardType,
 }>()
+
+const editableContent = computed({
+	get: () => {
+		return props.card.content.split("\r\n")
+	},
+	set: (value: string[]) => {
+		props.card.content = value.join("\r\n");
+	},
+});
 
 const close = () => {
 	msgStore.Reset();
