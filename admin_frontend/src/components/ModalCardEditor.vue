@@ -3,7 +3,9 @@
 
 		<div class="modalEditor__wrapper">
 			<div class="modalEditor__header">
-				<h2 class="modalEditor__title">Редактировать карточку {{ NameByCardType(props.cardType) }}</h2>
+				<h2 class="modalEditor__title">
+					{{ editorTitle }}
+				</h2>
 
 				<button @click="close"
 				        class="modalEditor__close">
@@ -74,6 +76,10 @@ const props = defineProps<{
 	card: Card,
 	cardType: CardType,
 }>()
+
+const editorTitle = computed(() => {
+	return (props.card.id ? "Редактирование карточки " : "Создание карточки ") + NameByCardType(props.cardType);
+});
 
 const editableContent = computed({
 	get: () => {
