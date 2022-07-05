@@ -36,7 +36,7 @@
 
 			<div class="modalEditor__footer">
 				<button
-					@click="save"
+					@click="handleSaveButton"
 					class="modalEditor__save">
 					Сохранить
 				</button>
@@ -67,6 +67,7 @@ const msgStore = useMessageStore();
 const emits = defineEmits<{
 	(e: "close"): void,
 	(e: "save"): void,
+	(e: "update"): void,
 }>()
 
 const props = defineProps<{
@@ -93,6 +94,21 @@ const save = () => {
 	msgStore.Reset();
 
 	emits("save");
+}
+
+const update = () => {
+	msgStore.Reset();
+
+	emits("update");
+}
+
+const handleSaveButton = () => {
+	if (props.card.id === "") {
+		save()
+		return
+	}
+
+	update();
 }
 
 </script>

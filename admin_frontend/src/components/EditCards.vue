@@ -2,7 +2,7 @@
 	<div class="editCards">
 		<div class="editCards__cards" :class="{ 'editCards__cards--full-width': props.fullWidth }">
 			<template v-if="props.cards">
-				<tuff-card v-for="c in props.cards" :card="c" @editCard="handleEditCard"
+				<tuff-card v-for="c in props.cards" :card="c" @editCard="updateCard"
 				           @deleteCard="handleDeleteCard"/>
 			</template>
 			<p v-else class="editCards__noCards">
@@ -22,6 +22,7 @@
 			                 :card="editableCard"
 			                 :card-type="props.cardType"
 			                 @save="createCard"
+			                 @update="handleEditCard"
 			                 @close="resetModal"/>
 		</transition>
 	</div>
@@ -84,14 +85,19 @@ const createCard = () => {
 	});
 }
 
+const updateCard = (card: Card) => {
+	setModalState(true);
+	editableCard.value = {...card};
+}
+
 const resetModal = () => {
 	setModalState(false);
 	editableCard.value = <Card>{};
 }
 
-const handleEditCard = (card: Card) => {
+const handleEditCard = () => {
 	emits("editCard", {
-		card: card,
+		card: editableCard.value,
 		cardType: props.cardType,
 	});
 }

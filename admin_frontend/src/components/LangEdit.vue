@@ -91,6 +91,7 @@
 					<edit-cards :cards="howItWorksCards"
 					            :card-type="CardType.HowWorks"
 					            @createCard="handleCreateCard"
+					            @editCard="handleEditCard"
 					            @deleteCard="handleDeleteCard"
 					            ref="editHowItWorksCards"
 					/>
@@ -125,6 +126,7 @@
 					            :full-width="true"
 					            :card-type="CardType.Commission"
 					            @createCard="handleCreateCard"
+					            @editCard="handleEditCard"
 					            @deleteCard="handleDeleteCard"
 					            ref="editCommissionCards"
 					/>
@@ -157,6 +159,7 @@
 					<!-- Edit Cards Component -->
 					<edit-cards :cards="whyUsCards"
 					            @createCard="handleCreateCard"
+					            @editCard="handleEditCard"
 					            @deleteCard="handleDeleteCard"
 					            :card-type="CardType.WhyUs"
 					            ref="editWhyUsCards"
@@ -419,30 +422,53 @@ const handleCreateCard = async (val: any) => {
 
 // handleEditCard is called when the user clicks the edit button on each card
 const handleEditCard = async (val: any) => {
-	const card = val.card;
-	const cardType = val.cardType;
+	const card = val.card as Card;
+	const cardType = val.cardType as CardType;
 
-
-	return;
+	// Check if card title or content is empty
+	if (card.title === "" || card.content === "") {
+		msgStore.SetModalError("Заполните все поля");
+		return
+	}
 
 	isLoading.value = true;
 	reset();
 
 
 	try {
-		const res = await HTTP.get<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${card.id}`);
-
+		const res = await HTTP.put<Response<Card>>(`/api/v1/${SlugByCardType(cardType)}/${card.id}`, card);
 		console.log(res.data)
 
-		// Open modal with card data
+		// Update card in the list of cards
+		switch (cardType) {
+			case CardType.Shopping:
+				shoppingCards.value = shoppingCards.value.map(c => c.id === card.id ? res.data.data : c);
+				break;
+			case CardType.HowWorks:
+				howItWorksCards.value = howItWorksCards.value.map(c => c.id === card.id ? res.data.data : c);
+				break;
+			case CardType.Commission:
+				commissionCards.value = commissionCards.value.map(c => c.id === card.id ? res.data.data : c);
+				break;
+			case CardType.WhyUs:
+				whyUsCards.value = whyUsCards.value.map(c => c.id === card.id ? res.data.data : c);
+				break;
+		}
 
-		isLoading.value = false;
+		msgStore.SetModalSuccess("Карточка успешно отредактирована");
+
+		Delay(() => {
+			closeEditModal();
+			msgStore.Reset();
+		});
 
 	} catch (e) {
 		msgStore.SetError((e as AxiosError).message);
 
 		console.log(e)
 	}
+
+	isLoading.value = false;
 
 }
 
