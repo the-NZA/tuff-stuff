@@ -18,7 +18,7 @@ const routes: RouteRecordRaw[] = [
 		name: "Index",
 		component: Index,
 		meta: {
-			title: "Index",
+			title: "Панель администратора",
 			public: false,
 		},
 	},
@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
 		name: "Lang",
 		component: Lang,
 		meta: {
-			title: "Lang",
+			title: "Редактирование по языку",
 			public: false,
 		},
 	},
@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
 		name: "Options",
 		component: Options,
 		meta: {
-			title: "Options",
+			title: "Настройки",
 			public: false,
 		},
 	},
@@ -45,7 +45,7 @@ const routes: RouteRecordRaw[] = [
 		name: "Login",
 		component: Login,
 		meta: {
-			title: "Login",
+			title: "Авторизация",
 			public: true,
 		},
 	}
@@ -56,7 +56,13 @@ const router = createRouter({
 	routes,
 });
 
+const setTitle = (title: string) => {
+	document.title = `${title} | Tuff Stuff`;
+}
+
 router.beforeEach(async (to, from, next) => {
+	setTitle((to.meta as { title: string }).title);
+
 	const authStore = useAuthStore()
 	const messageStore = useMessageStore()
 
