@@ -3,7 +3,7 @@
 
 		<div class="modalEditor__wrapper">
 			<div class="modalEditor__header">
-				<h2 class="modalEditor__title">Редактировать карточку {{ NameByCardType(props.cardType) }}</h2>
+				<h2 class="modalEditor__title">{{ modalTitle }}</h2>
 
 				<button @click="close"
 				        class="modalEditor__close">
@@ -65,7 +65,11 @@ import NameByCardType from "../util/NameByCardType";
 const msgStore = useMessageStore();
 
 const editableContent = computed({
-	get: () => props.card.content.split("\r\n"),
+	get: () => {
+		const res = props.card.content?.split("\r\n");
+
+		return res || [];
+	},
 	set: (value: string[]) => {
 		props.card.content = value.join("\r\n");
 	},
@@ -90,8 +94,26 @@ const close = () => {
 const save = () => {
 	msgStore.Reset();
 
+	console.log("modal saved")
+
 	emits("save");
 }
+
+const modalTitle = computed(() => {
+	let title = "Редактировать карточку ";
+
+	if (props.cardType === CardType.Shopping) {
+		title += "услуг персонального шоппинга";
+	} else if (props.cardType === CardType.WhyUs) {
+		title += "почему выбирают нас";
+	} else if (props.cardType === CardType.Commission) {
+		title += "услуги комиссионного ресурса";
+	} else if (props.cardType === CardType.HowWorks) {
+		title += "как работает сервис";
+	}
+
+	return title;
+});
 
 </script>
 

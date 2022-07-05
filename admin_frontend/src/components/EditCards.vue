@@ -70,6 +70,10 @@ const addCard = () => {
 }
 
 const createCard = () => {
+	console.log("edit cards saved ")
+	console.log(editableCard.value)
+	console.log(props.cardType)
+
 	emits("createCard", {
 		card: editableCard.value,
 		cardType: props.cardType,

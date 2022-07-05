@@ -461,5 +461,5 @@ const handleDeleteCard = async (val: any) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 </style>
