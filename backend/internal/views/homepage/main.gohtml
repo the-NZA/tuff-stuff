@@ -126,14 +126,23 @@
             </ol>
 
             <div class="how_works__buttons">
-                <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="button how_works__button"
-                   target="_blank">
-                    Сделать заказ через whats app
-                </a>
-                <a href="https://t.me/{{ .Options.telegram.Value }}" class="button how_works__button"
-                   target="_blank">
-                    Сделать заказ через telegram
-                </a>
+                {{ if eq .Homepage.Lang "ru" }}
+                    <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="button how_works__button"
+                       target="_blank">
+                        Сделать заказ через whats app
+                    </a>
+                    <a href="https://t.me/{{ .Options.telegram.Value }}" class="button how_works__button"
+                       target="_blank">
+                        Сделать заказ через telegram
+                    </a>
+                {{ else }}
+                    <a href="https://wa.me/{{ .Options.whatsapp.Value }}" class="button how_works__button">
+                        Go to whats app
+                    </a>
+                    <a href="https://t.me/{{ .Options.telegram.Value }}" class="button how_works__button">
+                        Go to telegram
+                    </a>
+                {{ end }}
             </div>
         </div>
     </section>
@@ -163,7 +172,13 @@
             </div>
 
             <div class="commission_services__buttons">
-                <a href="#" class="button commission_services__button">заказать аутентификацию entrupy</a>
+                <a href="#" class="button commission_services__button">
+                    {{ if eq .Homepage.Lang "ru" }}
+                        заказать аутентификацию entrupy
+                    {{ else }}
+                        order entrupy authentication
+                    {{ end }}
+                </a>
                 <a href="#" class="button commission_services__button">TUFF STUFF VINTAGE</a>
             </div>
         </div>
