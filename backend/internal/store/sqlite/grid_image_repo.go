@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	gridImageGetAll  = `SELECT * FROM grid_images`
-	gridImageUpdate  = `UPDATE grid_images SET image_id = ? WHERE id = ?`
+	gridImageGetAll  = `SELECT * FROM image_grid`
+	gridImageUpdate  = `UPDATE image_grid SET image_id = ? WHERE id = ?`
 	gridImageGetURLs = `SELECT images.url FROM image_grid JOIN images ON image_grid.image_id = images.id;`
 )
 
