@@ -9,18 +9,15 @@ COPY go.* ./
 
 RUN go mod download
 
-RUN go build -v -o tuff ./backend/cmd/tuff
+RUN CGO_ENABLED=1 GOOS=linux go build -v -o tuff -a -ldflags '-linkmode external -extldflags "-static"' ./backend/cmd/tuff
+
+## Step 2
+FROM scratch
+
+WORKDIR /app
+
+COPY --from=builder /app/tuff .
 
 EXPOSE 8080
 
 ENTRYPOINT ["./tuff"]
-
-
-## Step 2
-#FROM alpine:3.16 as runner
-#
-#WORKDIR /app
-#
-#COPY --from=builder /app/tuff ./tuff
-#
-#ENTRYPOINT ["./tuff"]
