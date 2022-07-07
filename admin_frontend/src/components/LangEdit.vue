@@ -169,6 +169,16 @@
 			<!--Why us cards END-->
 
 			<!--Image Grid-->
+			<div class="editPage__row">
+				<label for="imageGrid" class="editPage__label">
+					Сетка изображений
+				</label>
+
+				<div class="editPage__cards">
+					<!-- GridImageEditor component -->
+					{{ imageGrid }}
+				</div>
+			</div>
 			<!--Image Grid END-->
 		</template>
 
@@ -205,6 +215,7 @@ import {CardType} from "../types/CardType";
 import {Delay} from "../util/delay";
 import SlugByCardType from "../util/SlugByCardType";
 import {useMessageStore} from "../store/message";
+import {GridImage} from "../types/Image";
 
 const msgStore = useMessageStore();
 
@@ -227,6 +238,7 @@ const shoppingCards = ref<Card[]>(<Card[]>[])
 const howItWorksCards = ref<Card[]>(<Card[]>[])
 const commissionCards = ref<Card[]>(<Card[]>[])
 const whyUsCards = ref<Card[]>(<Card[]>[])
+const imageGrid = ref<GridImage[]>(<GridImage[]>[])
 
 const editShoppingCards = ref<InstanceType<typeof EditCards>>(null);
 const editHowItWorksCards = ref<InstanceType<typeof EditCards>>(null);
@@ -291,6 +303,10 @@ const loadData = async () => {
 			}
 		});
 		whyUsCards.value = whyUsRes.data.data;
+
+		// Get image grid from server
+		const imageGridRes = await HTTP.get <Response<GridImage[]>>(`/api/v1/image-grid/with-urls`);
+		imageGrid.value = imageGridRes.data.data;
 
 	} catch (e) {
 		msgStore.SetError((e as AxiosError).message);
