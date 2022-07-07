@@ -176,7 +176,7 @@
 
 				<div class="editPage__cards">
 					<!-- GridImageEditor component -->
-					{{ imageGrid }}
+					<grid-image-editor :images="imageGrid"/>
 				</div>
 			</div>
 			<!--Image Grid END-->
@@ -204,6 +204,7 @@
 import Loader from './Loader.vue';
 import MultiText from './MultiText.vue';
 import EditCards from './EditCards.vue';
+import GridImageEditor from './GridImageEditor.vue';
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import {computed, onBeforeMount, reactive, ref} from "vue";
 import HTTP from "../util/HTTP";
@@ -211,11 +212,11 @@ import {AxiosError} from "axios";
 import {Response} from "../types/Response";
 import {Card} from "../types/Card";
 import {Homepage, HomepageContent} from "../types/Homepage";
+import {GridImage} from "../types/Image";
 import {CardType} from "../types/CardType";
 import {Delay} from "../util/delay";
 import SlugByCardType from "../util/SlugByCardType";
 import {useMessageStore} from "../store/message";
-import {GridImage} from "../types/Image";
 
 const msgStore = useMessageStore();
 
