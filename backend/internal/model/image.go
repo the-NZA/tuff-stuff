@@ -27,3 +27,21 @@ func (i GridImage) Validate() error {
 		validation.Field(&i.ImageID, validation.Required),
 	)
 }
+
+// GridImageWithURL represent grid image with image URL.
+type GridImageWithURL struct {
+	GridImage
+	URL string `json:"url" db:"url"`
+}
+
+func (i GridImageWithURL) Validate() error {
+	// Validate grid image fields.
+	if err := i.GridImage.Validate(); err != nil {
+		return err
+	}
+
+	// Validate image URL.
+	return validation.ValidateStruct(&i,
+		validation.Field(&i.URL, validation.Required),
+	)
+}

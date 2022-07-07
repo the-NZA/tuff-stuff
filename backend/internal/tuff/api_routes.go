@@ -78,6 +78,7 @@ func (app *App) apiRouter() http.Handler {
 	// ImageGrid routes
 	router.Route("/image-grid", func(r chi.Router) {
 		r.Get("/", app.imageGridGetAllHandler())
+		r.Get("/with-urls", app.imageGridGetAllWithURLsHandler())
 		r.Put("/{id}", app.imageGridUpdateByIDHandler())
 	})
 

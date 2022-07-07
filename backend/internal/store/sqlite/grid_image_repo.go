@@ -6,9 +6,10 @@ import (
 )
 
 const (
-	gridImageGetAll  = `SELECT * FROM image_grid`
-	gridImageUpdate  = `UPDATE image_grid SET image_id = ? WHERE id = ?`
-	gridImageGetURLs = `SELECT images.url FROM image_grid JOIN images ON image_grid.image_id = images.id;`
+	gridImageGetAll   = `SELECT * FROM image_grid`
+	gridImageUpdate   = `UPDATE image_grid SET image_id = ? WHERE id = ?`
+	gridImageGetURLs  = `SELECT images.url FROM image_grid JOIN images ON image_grid.image_id = images.id;`
+	gridImageWithURLs = `SELECT image_grid.id, image_grid.image_id, images.url FROM image_grid JOIN images ON image_grid.image_id = images.id;`
 )
 
 type GridImageRepo struct {
@@ -22,6 +23,18 @@ func (r *GridImageRepo) GetAll() ([]model.GridImage, error) {
 	err := r.db.Select(
 		&images,
 		gridImageGetAll,
+	)
+
+	return images, err
+}
+
+// GetAllWithURLs returns the grid images with their URLs.
+func (r *GridImageRepo) GetAllWithURLs() ([]model.GridImageWithURL, error) {
+	var images []model.GridImageWithURL
+
+	err := r.db.Select(
+		&images,
+		gridImageWithURLs,
 	)
 
 	return images, err

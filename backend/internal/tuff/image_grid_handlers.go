@@ -31,6 +31,29 @@ func (app *App) imageGridGetAllHandler() http.HandlerFunc {
 	}
 }
 
+// imageGridGetAllWithURLsHandler( handles getting the URLs for the grid images.
+func (app *App) imageGridGetAllWithURLsHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get all grid images from the database.
+		images, err := app.store.GridImages().GetAllWithURLs()
+		if err != nil {
+			app.logger.Logf("[ERROR] failed to get all grid images: %v", err)
+
+			app.respondJSON(w, response{
+				Code:  http.StatusBadRequest,
+				Error: err.Error(),
+			})
+			return
+		}
+
+		// Respond with the grid images.
+		app.respondJSON(w, response{
+			Code: http.StatusOK,
+			Data: images,
+		})
+	}
+}
+
 // imageGridUpdateByIDHandler handles updating a grid image by ID.
 func (app *App) imageGridUpdateByIDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

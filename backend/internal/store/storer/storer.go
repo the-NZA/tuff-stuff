@@ -72,6 +72,7 @@ type ImageRepo interface {
 
 type GridImageRepo interface {
 	GetAll() ([]model.GridImage, error)
+	GetAllWithURLs() ([]model.GridImageWithURL, error)
 	GetURLs() ([]string, error)
 	Update(image model.GridImage) (model.GridImage, error)
 }
