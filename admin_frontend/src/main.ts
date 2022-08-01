@@ -7,6 +7,7 @@ import App from './App.vue'
 import "normalize.css"
 import "./styles/transitions.pcss"
 import "./styles/edit_page.pcss"
+import "./styles/modal_editor.pcss"
 
 createApp(App)
 	.use(createPinia())

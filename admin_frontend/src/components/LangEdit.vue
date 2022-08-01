@@ -212,7 +212,7 @@ import {AxiosError} from "axios";
 import {Response} from "../types/Response";
 import {Card} from "../types/Card";
 import {Homepage, HomepageContent} from "../types/Homepage";
-import {GridImage} from "../types/Image";
+import {GridImageWithURL} from "../types/Image";
 import {CardType} from "../types/CardType";
 import {Delay} from "../util/delay";
 import SlugByCardType from "../util/SlugByCardType";
@@ -239,7 +239,7 @@ const shoppingCards = ref<Card[]>(<Card[]>[])
 const howItWorksCards = ref<Card[]>(<Card[]>[])
 const commissionCards = ref<Card[]>(<Card[]>[])
 const whyUsCards = ref<Card[]>(<Card[]>[])
-const imageGrid = ref<GridImage[]>(<GridImage[]>[])
+const imageGrid = ref<GridImageWithURL[]>(<GridImageWithURL[]>[])
 
 const editShoppingCards = ref<InstanceType<typeof EditCards>>(null);
 const editHowItWorksCards = ref<InstanceType<typeof EditCards>>(null);
@@ -306,7 +306,7 @@ const loadData = async () => {
 		whyUsCards.value = whyUsRes.data.data;
 
 		// Get image grid from server
-		const imageGridRes = await HTTP.get <Response<GridImage[]>>(`/api/v1/image-grid/with-urls`);
+		const imageGridRes = await HTTP.get <Response<GridImageWithURL[]>>(`/api/v1/image-grid/with-urls`);
 		imageGrid.value = imageGridRes.data.data;
 
 	} catch (e) {

@@ -9,11 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import {GridImage} from "../types/Image";
+import {GridImageWithURL} from "../types/Image";
 import {computed} from "vue";
 
 const props = defineProps<{
-	image: GridImage
+	image: GridImageWithURL
+}>()
+
+const emits = defineEmits<{
+	(e: "edit", value: GridImageWithURL
+	): void;
 }>()
 
 const imgURL = computed(() => {
@@ -21,7 +26,7 @@ const imgURL = computed(() => {
 })
 
 const handleEdit = () => {
-	console.log(props.image)
+	emits("edit", props.image);
 }
 </script>
 

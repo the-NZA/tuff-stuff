@@ -11,6 +11,7 @@ export const useMessageStore = defineStore("message", {
 		successMessage: "",
 		isSuccess: false,
 		isShowModal: false,
+		isShowGridModal: false,
 	}),
 	getters: {
 		ErrorMessage: (state) => state.errorMessage,
@@ -22,6 +23,7 @@ export const useMessageStore = defineStore("message", {
 		ModalSuccessMessage: (state) => state.modalSuccessMessage,
 		IsModalSuccess: (state) => state.isModalSuccess,
 		IsShowModal: (state) => state.isShowModal,
+		IsShowGridModal: (state) => state.isShowGridModal,
 	},
 	actions: {
 		SetError(message: string) {
@@ -42,6 +44,9 @@ export const useMessageStore = defineStore("message", {
 		},
 		SetShowModal(isShowModal: boolean) {
 			this.isShowModal = isShowModal;
+		},
+		SetShowGridModal(isShowGridModal: boolean) {
+			this.isShowGridModal = isShowGridModal;
 		},
 		Reset() {
 			this.errorMessage = "";
