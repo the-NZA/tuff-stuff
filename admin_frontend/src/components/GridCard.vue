@@ -58,7 +58,9 @@ const handleEdit = () => {
 }
 
 .gridCard__image {
+	/*
 	background-color: rgb(var(--light-orange));
+	*/
 	max-width: 100%;
 	max-height: 100%;
 	min-height: 345px;
