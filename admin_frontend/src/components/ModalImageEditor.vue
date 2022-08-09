@@ -87,7 +87,7 @@ const preparedURL = computed(() => {
 		return `http://tuff-stuff.local/${props.image.url}`;
 	}
 
-	return newImageURL;
+	return newImageURL.value;
 })
 
 const handleImageChange = (e: Event) => {

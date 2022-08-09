@@ -241,16 +241,16 @@ const commissionCards = ref<Card[]>(<Card[]>[])
 const whyUsCards = ref<Card[]>(<Card[]>[])
 const imageGrid = ref<GridImageWithURL[]>(<GridImageWithURL[]>[])
 
-const editShoppingCards = ref<InstanceType<typeof EditCards>>(null);
-const editHowItWorksCards = ref<InstanceType<typeof EditCards>>(null);
-const editCommissionCards = ref<InstanceType<typeof EditCards>>(null);
-const editWhyUsCards = ref<InstanceType<typeof EditCards>>(null);
+const editShoppingCards = ref<InstanceType<typeof EditCards>>();
+const editHowItWorksCards = ref<InstanceType<typeof EditCards>>();
+const editCommissionCards = ref<InstanceType<typeof EditCards>>();
+const editWhyUsCards = ref<InstanceType<typeof EditCards>>();
 
 const closeEditModal = () => {
-	editShoppingCards.value.setModalState(false);
-	editHowItWorksCards.value.setModalState(false);
-	editCommissionCards.value.setModalState(false);
-	editWhyUsCards.value.setModalState(false);
+	editShoppingCards.value?.setModalState(false);
+	editHowItWorksCards.value?.setModalState(false);
+	editCommissionCards.value?.setModalState(false);
+	editWhyUsCards.value?.setModalState(false);
 }
 
 // loadData is called before the component is mounted or updated
